@@ -1,7 +1,7 @@
 site_name: CATENA
 site_description: End-to-end pipelines for large-scale connectomics
 repo_url: https://github.com/your-org/your-repo
-docs_dir: catena_docs
+docs_dir: docs
 
 theme:
   name: material

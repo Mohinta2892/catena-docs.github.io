@@ -1,0 +1,44 @@
+site_name: CATENA
+site_description: End-to-end pipelines for large-scale connectomics
+repo_url: https://github.com/your-org/your-repo
+docs_dir: catena_docs
+
+theme:
+  name: material
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - content.code.copy
+
+markdown_extensions:
+  - admonition
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.superfences
+
+nav:
+  - Home: index.md
+  - Getting Started: getting-started.md
+  - Modules:
+      - Local Shape Descriptors:
+          - Overview: modules/local-shape-descriptors/index.md
+          - Design Choices: modules/local-shape-descriptors/design-choices.md
+      - Synful:
+          - Overview: modules/synful/index.md
+          - Design Choices: modules/synful/design-choices.md
+      - Em Mask Generation:
+          - Overview: modules/em-mask-generation/index.md
+          - Design Choices: modules/em-mask-generation/design-choices.md
+      - Mitochondria Segmentation:
+          - Overview: modules/mitochondria-segmentation/index.md
+          - Design Choices: modules/mitochondria-segmentation/design-choices.md
+      - Neurotransmitter Classification:
+          - Overview: modules/neurotransmitter-classification/index.md
+          - Design Choices: modules/neurotransmitter-classification/design-choices.md
+      - Proofreading:
+          - Overview: modules/proofreading/index.md
+          - Design Choices: modules/proofreading/design-choices.md
+      - Visualize:
+          - Overview: modules/visualize/index.md
+          - Design Choices: modules/visualize/design-choices.md

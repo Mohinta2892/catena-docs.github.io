@@ -519,6 +519,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Decision">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-gunpowder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Gunpowder?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -794,7 +811,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../synful/" class="md-nav__link">
+      <a href="../../simpsyn/" class="md-nav__link">
         
   
   
@@ -822,7 +839,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../synful/design-choices/" class="md-nav__link">
+      <a href="../../simpsyn/design-choices/" class="md-nav__link">
         
   
   
@@ -1478,6 +1495,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Decision">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-gunpowder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Gunpowder?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1549,23 +1583,136 @@
 <p>This page explains the decisions we made, alternatives considered, trade-offs, and future work.</p>
 </blockquote>
 <h2 id="problem-goal">Problem / Goal<a class="headerlink" href="#problem-goal" title="Permanent link">&para;</a></h2>
-<p>What outcome are we optimizing for?</p>
+<p>We want to robustly segment neurons in large Electron Microscopy (EM) volumes, and do so in a way that:</p>
+<ul>
+<li>scales from “toy” ROIs (small subvolumes) to multi-terabyte datasets,</li>
+<li>works across different microscopes, preparations, and organisms,</li>
+<li>stays reproducible and re-runnable on normal lab infrastructure (HPC / workstations),</li>
+<li>plugs cleanly into downstream connectomics steps (synapses, mitochondria, neurotransmitters, proofreading).</li>
+</ul>
+<p>In practical terms: given raw EM, we want a <strong>bottom-up</strong> pipeline that predicts local fields (affinities + LSDs) and then turns those into instances via watershed and agglomeration.</p>
 <h2 id="alternatives-considered">Alternatives Considered<a class="headerlink" href="#alternatives-considered" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Option A – pros/cons</li>
-<li>Option B – pros/cons</li>
-<li>Option C – pros/cons</li>
+<li><strong>Affinities-only U-Net</strong>  </li>
+<li><em>Pros</em>: simpler targets, lighter bookkeeping, fewer outputs. We support this within our current neuron segmentation setup. You can forego generating LSDs and train an affinity-only model.</li>
+<li>
+<p><em>Cons</em>: less shape-awareness, more brittle in thin processes, more sensitive to hyperparameters during agglomeration. LSDs often show consistently better or more stable behaviour for the same backbone.</p>
+</li>
+<li>
+<p><strong>Boundary-only / membrane U-Nets (torchEM / BiaPy-style)</strong>  </p>
+</li>
+<li><em>Pros</em>: conceptually straightforward (predict a membrane probability map), widely used, and well-supported in libraries like torchEM and BiaPy. Easy to plug into standard watershed + agglomeration toolchains from <code>scikit-image</code> (even be inspired from the <a href="https://github.com/kreshuklab/plant-seg">PlantSeg</a>) and to reuse existing code/configs.  </li>
+<li>
+<p><em>Cons</em>: all the instance information is pushed into a single boundary channel (could be expanded to use Contours and Distance). This tends to make training and post-processing more sensitive to class imbalance, noise, and local artefacts; and you often need dataset-specific tuning of thresholds and post-processing to get robust neuron instances. LSDs explicitly inject local shape statistics, which we found to stabilise training and make the affinities less brittle.</p>
+</li>
+<li>
+<p><strong>Flood-Filling Networks (FFNs)</strong>  </p>
+</li>
+<li><em>Pros</em>: strong instance segmentation story, conceptually close to how humans might trace neurons.  </li>
+<li>
+<p><em>Cons</em>: heavier runtime, more complex code-paths, harder to integrate with our Zarr/Daisy/Gunpowder stack, and less friendly to small teams wanting to run and extend the pipeline. </p>
+</li>
+<li>
+<p><strong>Different storage formats (HDF5-only, N5, TIFF)</strong>  </p>
+</li>
+<li><em>Pros</em>: sometimes simpler to inspect (TIFF), widely used (HDF5), compatible with some existing tools. We do use N5 as Zarr allows loading N5s and we also use HDF5s, but predominantly for synapse detection. </li>
+<li><em>Cons</em>: TIFFs can be less ergonomic for distributed processing at scale; more friction with our chosen ecosystem; harder to maintain a single, consistent story across modules.</li>
 </ul>
 <h2 id="decision">Decision<a class="headerlink" href="#decision" title="Permanent link">&para;</a></h2>
-<p>What we chose and why.</p>
+<p>We standardised on the following:</p>
+<ul>
+<li><strong>Model family</strong>: multi-task U-Nets that jointly predict LSDs and affinities (and optionally other channels such as mitochondria).</li>
+<li><strong>I/O format</strong>: Zarr, with standardised dataset names under <code>volumes/raw</code> for EM; <code>volumes/labels/neuron_ids</code> for neuron labels. <strong>Note: We follow the CREMI format for laying out our data.</strong></li>
+<li><strong>Scaling</strong>: Gunpowder for data loading/augmentation + Daisy for block-wise prediction and large-volume instance segmentation.</li>
+<li><strong>Downstream segmentation</strong>: watershed + agglomeration on affinities, using LSDs as an auxiliary signal during training to make those affinities “better behaved”.</li>
+</ul>
+<p>This gives us:</p>
+<ul>
+<li>a reasonably small and understandable codebase,</li>
+<li>a single storage + processing story that generalises to other Catena modules,</li>
+<li>and a path that remains open, reproducible, and modifiable by other labs.</li>
+</ul>
+<h3 id="why-gunpowder">Why Gunpowder?<a class="headerlink" href="#why-gunpowder" title="Permanent link">&para;</a></h3>
+<p>We build the training and augmentation pipeline on top of Gunpowder.</p>
+<p>One key reason is that Gunpowder represents every array with an explicit voxel size and ROI. All crops, fields-of-view, and augmentations are defined in this voxel-resolution space and then applied relative to the data’s native resolution. In practice, this means the same pipeline configuration naturally adapts across datasets with different voxel sizes: a “certain amount of context” really means a certain amount of <em>physical</em> context, not just an arbitrary number of pixels.</p>
+<p>This makes the training setup more robust and resolution-aware than pixel-based scripts.</p>
 <h2 id="trade-offs">Trade-offs<a class="headerlink" href="#trade-offs" title="Permanent link">&para;</a></h2>
-<p>Compute, memory, DX, accuracy, portability, etc.</p>
+<ul>
+<li>
+<p><strong>More targets to generate</strong><br />
+  LSDs require additional pre-processing to create per-voxel shape descriptors. Though this happens on-the-fly as part of the data augmentation pipeline, it adds a bit of complexity and hence the training is overall slower than you would see in a affinity-only model.</p>
+</li>
+<li>
+<p><strong>Slightly larger models / outputs</strong><br />
+  Predicting both LSDs and affinities means more output channels and slightly higher memory usage than a pure-affinity U-Net.</p>
+</li>
+<li>
+<p><strong>Zarr-first means conversion upfront</strong><br />
+  If you start from HDF5 or raw TIFFs, there is an upfront conversion step. For tiny test volumes this can feel like overkill, but it pays off once you move beyond toy/ROI scales.</p>
+</li>
+<li>
+<p><strong>Watershed + agglomeration stack</strong><br />
+  Instance segmentation is a multi-step process (prediction → fragments → agglomeration → LUT → final segmentation), and some steps rely on MongoDB and batch jobs. This is more moving parts than a toy example using small subvolumes, but it’s also what lets us scale to big volumes and explore different thresholds without re-running everything.</p>
+</li>
+</ul>
 <h2 id="implementation-notes">Implementation Notes<a class="headerlink" href="#implementation-notes" title="Permanent link">&para;</a></h2>
-<p>Key parameters, scripts, data flow.</p>
+<p>Some relevant components in this module:</p>
+<ul>
+<li><strong>Data preparation</strong></li>
+<li><code>create_dir_organisation.py</code>: builds the directory structure for 2D/3D, train/test, and domains.</li>
+<li>
+<p><code>hdf_to_zarr.py</code>: converts HDF5 datasets into Zarr and adds required label/mask datasets. We always use zarr during model training and inference.</p>
+</li>
+<li>
+<p><strong>Config modification and management</strong></p>
+</li>
+<li>
+<p><code>config_{datavolume}.py</code>: adapt and modify a config file. These shared config files <a href="https://github.com/Mohinta2892/catena/tree/dev/local_shape_descriptors/config">here</a> are examples that we ourselves have used for training our models. 
+ Each config is named based on the dataset it used during training. Input shapes, downsampling factors and kernels are guided by the EM resolution. In lay terms, this means that anisotropic models (on anisotropic datasets) are trained differently to how isotropic models.
+ Generally, the downsampling is adjusted such that the data eventually becomes isotropic as it passes through the model's convolutional layers till the bottleneck layer. <strong>Augmentations are also applied anisotropically for anisotropic datasets</strong>.</p>
+</li>
+<li>
+<p><strong>Models</strong></p>
+</li>
+<li>
+<p><code>MtlsdModel</code>, <code>MtlsdMitoModel</code>, <code>LsdModel</code>, <code>AffModel</code> under <code>local_shape_descriptors/models</code>: PyTorch implementations of multi-task U-Nets for LSDs, affinities, and (optionally) mitochondria. We <strong>strongly</strong> recommend using MTLSD model </p>
+</li>
+<li>
+<p><strong>Training / prediction</strong></p>
+</li>
+<li><code>trainer.py</code>: multi-task LSD + affinity training using Gunpowder.</li>
+<li><code>predicter.py</code>: single-process prediction on smaller volumes.</li>
+<li>
+<p><code>super_predicter_daisy.py</code>: Daisy-driven, block-wise prediction for large volumes.</p>
+</li>
+<li>
+<p><strong>Instance segmentation</strong></p>
+</li>
+<li><code>instance_segmenter.py</code>: watershed + agglomeration for small-ish volumes.</li>
+<li><code>02_extract_fragments_blockwise.py</code>, <code>03_agglomerate_blockwise.py</code>, <code>04_find_segments_full.py</code>, <code>05_extract_segmentation_from_lut.py</code>: Daisy + MongoDB-based large-volume fragment extraction, agglomeration, LUT generation, and final segmentation writing.</li>
+</ul>
+<p><strong>Outputs are also written into Zarrs.</strong></p>
 <h2 id="operational-guidance">Operational Guidance<a class="headerlink" href="#operational-guidance" title="Permanent link">&para;</a></h2>
-<p>Tuning tips, failure modes, troubleshooting.</p>
+<ul>
+<li>Use <strong>Zarr</strong> from the beginning if you know the dataset will grow beyond small subvolumes (ROIs).  </li>
+<li>For quick experiments / small ROIs, <code>predicter.py</code> + <code>instance_segmenter.py</code> are the path of least resistance.  </li>
+<li>For large volumes, always:</li>
+<li>Convert to Zarr,</li>
+<li>Use <code>super_predicter_daisy_{chunkskipping}.py</code> for affinities (and LSDs),</li>
+<li>
+<p>Run the block-wise watershed + agglomeration scripts.</p>
+</li>
+<li>
+<p>Start with the provided configs for public datasets (CREMI, SNEMI, etc.) and only deviate once you have a baseline.</p>
+</li>
+</ul>
 <h2 id="future-work-open-questions">Future Work / Open Questions<a class="headerlink" href="#future-work-open-questions" title="Permanent link">&para;</a></h2>
-<p>What we plan to revisit and why.</p>
+<ul>
+<li>Better, more automatic hyperparameter selection for agglomeration thresholds.</li>
+<li>Tighter integration with other Catena modules (e.g. reusing LSDs as features for other segmentation tasks). We can currently couple mitochondria segmentation and neuron segmentation in the same LSDs framework.</li>
+<li>Exploring more <code>top-down</code> approaches on top of LSDs (e.g. graph-based refinement, morphology-aware merges/splits).</li>
+<li>Support for alternative storage backends (CloudVolume / NGFF) while keeping (OME)Zarr as the main path.</li>
+</ul>
 
 
 
@@ -1593,6 +1740,10 @@
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
       <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright (c) Samia Mohinta
+    </div>
   
   
     Made with

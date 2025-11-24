@@ -11,7 +11,7 @@
       
       
       
-        <link rel="prev" href="../simpsyn/design-choices/">
+        <link rel="prev" href="../../why_name_it_catena/">
       
       
         <link rel="next" href="design-choices/">
@@ -47,6 +47,8 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
+    
+      <link rel="stylesheet" href="../../stylesheets/overrides.css">
     
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -283,7 +285,7 @@
   <span class="md-ellipsis">
     
   
-    Why the name CATENA
+    Why the name CATENA?
   
 
     
@@ -349,6 +351,227 @@
                 
   
   
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EM Mask Generation
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    EM Mask Generation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-the-em-mask-generation-module" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is the EM Mask Generation module?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-do-we-need-these-masks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why do we need these masks?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-do-we-generate-these-masks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How do we generate these masks?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How do we generate these masks?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-conventional-computer-vision" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Conventional computer vision
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-machine-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Machine learning
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="design-choices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Choices
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
   
   
     
@@ -360,10 +583,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
         
           
-          <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
             
   
   
@@ -381,8 +604,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4_1">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -471,10 +694,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" >
         
           
-          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
             
   
   
@@ -492,8 +715,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4_2">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -518,10 +741,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_1" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3_1" >
         
           
-          <label class="md-nav__link" for="__nav_4_2_1" id="__nav_4_2_1_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_3_1" id="__nav_4_3_1_label" tabindex="0">
             
   
   
@@ -539,8 +762,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_1_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4_2_1">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3_1">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -629,10 +852,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3_2" >
         
           
-          <label class="md-nav__link" for="__nav_4_2_2" id="__nav_4_2_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_3_2" id="__nav_4_3_2_label" tabindex="0">
             
   
   
@@ -650,8 +873,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4_2_2">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3_2">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -720,129 +943,6 @@
           </ul>
         </nav>
       
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-    
-  
-  
-  
-    
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" checked>
-        
-          
-          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Em Mask Generation
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_4_3">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Em Mask Generation
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-    
-  
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Overview
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="design-choices/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Design Choices
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -1327,6 +1427,75 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-the-em-mask-generation-module" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is the EM Mask Generation module?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-do-we-need-these-masks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why do we need these masks?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-do-we-generate-these-masks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How do we generate these masks?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How do we generate these masks?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-conventional-computer-vision" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Conventional computer vision
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-machine-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Machine learning
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1345,12 +1514,62 @@
   
 
 
-<h1 id="em-mask-generation">Em Mask Generation<a class="headerlink" href="#em-mask-generation" title="Permanent link">&para;</a></h1>
+<h1 id="em-mask-generation">EM Mask Generation<a class="headerlink" href="#em-mask-generation" title="Permanent link">&para;</a></h1>
 <p>Short overview of what this module does and links to usage.</p>
 <ul>
-<li><strong>Install &amp; Usage:</strong> See the module's README and scripts.</li>
+<li><strong>Install &amp; Usage:</strong> See the module's README and scripts in the GitHub repository for the most up-to-date instructions.</li>
 <li><strong>Design Choices:</strong> See <a href="design-choices/">Design Choices</a> for the "why" behind the "what".</li>
 </ul>
+<h2 id="what-is-the-em-mask-generation-module">What is the EM Mask Generation module?<a class="headerlink" href="#what-is-the-em-mask-generation-module" title="Permanent link">&para;</a></h2>
+<p>In this module, we generate <strong>EM masks</strong> that label which parts of a volume are <em>brain</em> and which parts are <em>non-brain</em> tissue. Think of it as a tissue-labelling step: we want a clean mask that says <span class="mask-brain">"this voxel belongs to brain or ventral nerve cord"</span> vs <span class="mask-nonbrain">"this is resin, trachea, or something we don’t plan to segment"</span>.</p>
+<p>For now, the examples are based on <strong>Drosophila larva FIBSEM</strong> volumes (downsampled), but the ideas are general.</p>
+<p>We work with two classes:</p>
+<ul>
+<li><strong>Brain</strong> – any tissue that forms the brain or ventral nerve cord.  </li>
+<li><strong>Non-brain</strong> – resin, tracheal membranes, cutting artefacts, or any regions of the volume we do <strong>not</strong> want to segment further.</li>
+</ul>
+<h2 id="why-do-we-need-these-masks">Why do we need these masks?<a class="headerlink" href="#why-do-we-need-these-masks" title="Permanent link">&para;</a></h2>
+<p>Most downstream steps in Catena (neuron segmentation, synapses, mitochondria, neurotransmitters, etc) only care about <strong>brain tissue</strong>. Resin and other non-brain structures just:</p>
+<ul>
+<li>waste GPU time and memory,</li>
+<li>could introduce false positives (e.g. “neuron segments” on resin),</li>
+<li>and make evaluation and proofreading more painful.</li>
+</ul>
+<p>A good brain vs non-brain mask lets us:</p>
+<ul>
+<li>restrict all heavy models and post-processing to <strong>relevant</strong> voxels only,</li>
+<li>standardise crops and RoIs across modules,</li>
+<li>and quickly visualise which parts of a huge EM volume are actually “in play” for connectomics.</li>
+</ul>
+<p><strong>In short: these masks are a cheap but powerful way to ignore what we don’t care about.</strong></p>
+<h2 id="how-do-we-generate-these-masks">How do we generate these masks?<a class="headerlink" href="#how-do-we-generate-these-masks" title="Permanent link">&para;</a></h2>
+<p>We provide two ways to obtain a brain vs non-brain mask.</p>
+<h3 id="1-conventional-computer-vision">1. Conventional computer vision<a class="headerlink" href="#1-conventional-computer-vision" title="Permanent link">&para;</a></h3>
+<p>As a lightweight, dependency-free baseline we start with classical CV:</p>
+<ul>
+<li>apply a <strong>Difference of Gaussians (DoG)</strong> filter, and  </li>
+<li>run a <strong>local texture / structure analysis</strong> to build masks.</li>
+</ul>
+<p>The pure DoG masks are not great on their own, but the texture-based masking can give a decent first separation of “background resin” from “biological tissue”. However, this approach cannot easily distinguish other non-brain structures such as tracheal membranes. It is a good starting point, but not the whole story.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The DoG/texture-based masks require manual finetuning of hyper-parameters such as <code>block_size</code>, <code>texture_sigma</code>, <code>edge_sigma</code> and <code>minimum_region_size</code>. Check design notes for more details</p>
+</div>
+<h3 id="2-machine-learning">2. Machine learning<a class="headerlink" href="#2-machine-learning" title="Permanent link">&para;</a></h3>
+<p>To go beyond that, we train a <strong>very simple 3D U-Net</strong> on a downsampled EM volume with semantic labels for <em>brain</em> and <em>non-brain</em>:</p>
+<ul>
+<li>implemented with <strong>MONAI</strong>,</li>
+<li>minimal data augmentation to encourage some generalisation to other EM datasets,</li>
+<li>trained in <strong>pixel space</strong> (we do not encode voxel size explicitly).</li>
+</ul>
+<p>At inference, this model generalises well (though of course not perfectly) to <strong>completely unseen EM volumes</strong>. The predicted masks already do a good job at separating brain tissue from everything else and are much better at handling structures like tracheal membranes.</p>
+<p>A <strong>post-processing</strong> step should follow after inference to:</p>
+<ul>
+<li>fill small gaps,</li>
+<li>slightly grow/erode the mask, and  </li>
+<li>make sure it overlays cleanly on the EM volume.</li>
+</ul>
+<p>An example post-processing script is provided in this module.</p>
 
 
 

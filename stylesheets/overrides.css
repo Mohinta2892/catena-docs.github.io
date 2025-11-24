@@ -1,0 +1,65 @@
+/* ============================
+   NOTE
+   Soft lavender/grey
+   ============================ */
+.md-typeset .admonition.note,
+.md-typeset details.note {
+  border: 1px solid #bab1e3;      /* muted lavender border */
+  background-color: #f5f3fb;      /* very light lavender fill */
+  box-shadow: none;
+}
+
+.md-typeset .admonition.note > .admonition-title,
+.md-typeset details.note > summary {
+  background-color: #e6e0f6;      /* slightly stronger header tint */
+  color: #2f2940;                 /* dark, readable text */
+}
+
+
+/* ============================
+   IMPORTANT
+   Soft mauve
+   ============================ */
+.md-typeset .admonition.important,
+.md-typeset details.important {
+  border: 1px solid #c3b2d0;      /* muted mauve border */
+  background-color: #f8f4fb;      /* very light mauve fill */
+  box-shadow: none;
+}
+
+.md-typeset .admonition.important > .admonition-title,
+.md-typeset details.important > summary {
+  background-color: #eee3f7;      /* stronger mauve header */
+  color: #35253f;
+}
+
+
+/* ============================
+   WARNING
+   Warm clay / terracotta
+   ============================ */
+.md-typeset .admonition.warning,
+.md-typeset details.warning {
+  border: 1px solid #d2a58b;      /* muted clay border */
+  background-color: #f7eee8;      /* light warm fill */
+  box-shadow: none;
+}
+
+.md-typeset .admonition.warning > .admonition-title,
+.md-typeset details.warning > summary {
+  background-color: #ecd9cc;      /* slightly deeper header */
+  color: #3f2b23;
+}
+
+
+/* Brain vs non-brain inline highlight */
+.mask-brain {
+  color: #6b5ca5;          /* muted violet */
+  font-weight: 600;
+}
+
+.mask-nonbrain {
+  color: #b06b4b;          /* warm clay */
+  font-weight: 600;
+  font-style: italic;
+}

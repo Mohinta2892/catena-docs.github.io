@@ -1528,6 +1528,17 @@
 <li><strong>Brain</strong> – any tissue that forms the brain or ventral nerve cord.  </li>
 <li><strong>Non-brain</strong> – resin, tracheal membranes, cutting artefacts, or any regions of the volume we do <strong>not</strong> want to segment further.</li>
 </ul>
+<figure>
+<p><img alt="EM mask generation: brain vs non-brain" src="assets/BRAIN-RESIN-TRACHEA_MASK.png" width="800" />
+  </p>
+<figcaption>
+  <strong>Figure 1.</strong> Brain vs non-brain mask generation in EM volumes. 
+  Top left: raw downsampled FIBSEM slice annotated with <em>brain</em>, <em>resin</em>, and <em>trachea</em>. 
+  Bottom left: classical DoG/texture-based masking, which separates biological tissue from background but also includes non-brain structures. 
+  Top right: manually drawn brain mask (ground truth). 
+  Bottom right: prediction from a simple 3D U-Net trained on these labels. 
+  </figcaption>
+</figure>
 <h2 id="why-do-we-need-these-masks">Why do we need these masks?<a class="headerlink" href="#why-do-we-need-these-masks" title="Permanent link">&para;</a></h2>
 <p>Most downstream steps in Catena (neuron segmentation, synapses, mitochondria, neurotransmitters, etc) only care about <strong>brain tissue</strong>. Resin and other non-brain structures just:</p>
 <ul>

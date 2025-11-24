@@ -1,7 +1,8 @@
 site_name: CATENA
 site_description: End-to-end pipelines for large-scale connectomics
-repo_url: https://github.com/your-org/your-repo
-docs_dir: docs
+repo_url: https://github.com/Mohinta2892/catena-docs.github.io
+copyright: "Copyright (c) Samia Mohinta"
+#docs_dir: docs
 
 theme:
   name: material
@@ -20,16 +21,21 @@ markdown_extensions:
 nav:
   - Home: index.md
   - Getting Started: getting-started.md
+  - Why the name CATENA?: why_name_it_catena.md
   - Modules:
+      - EM Mask Generation:
+          - Overview: modules/em-mask-generation/index.md
+          - Design Choices: modules/em-mask-generation/design-choices.md
       - Local Shape Descriptors:
           - Overview: modules/local-shape-descriptors/index.md
           - Design Choices: modules/local-shape-descriptors/design-choices.md
-      - Synful:
-          - Overview: modules/synful/index.md
-          - Design Choices: modules/synful/design-choices.md
-      - Em Mask Generation:
-          - Overview: modules/em-mask-generation/index.md
-          - Design Choices: modules/em-mask-generation/design-choices.md
+      - Synapse Detection:
+            - Synful:
+                - Overview: modules/synful/index.md
+                - Design Choices: modules/synful/design-choices.md
+            - SimpSyn:
+                - Overview: modules/simpsyn/index.md
+                - Design Choices: modules/simpsyn/design-choices.md
       - Mitochondria Segmentation:
           - Overview: modules/mitochondria-segmentation/index.md
           - Design Choices: modules/mitochondria-segmentation/design-choices.md
@@ -42,3 +48,6 @@ nav:
       - Visualize:
           - Overview: modules/visualize/index.md
           - Design Choices: modules/visualize/design-choices.md
+
+extra_css:
+  - stylesheets/overrides.css

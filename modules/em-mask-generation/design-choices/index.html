@@ -510,6 +510,67 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Alternatives Considered">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-global-intensity-thresholding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Global intensity thresholding
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-dog-only-edge-based-masking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. DoG-only / edge-based masking
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-texture-structure-analysis-current-cv-baseline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Texture / structure analysis (current CV baseline)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-heavier-ml-models-large-u-nets-transformers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Heavier ML models (large U-Nets / transformers)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-no-dedicated-mask-let-every-module-handle-resin-itself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. No dedicated mask (let every module handle resin itself)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -543,6 +604,240 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Implementation Notes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-texture-based-em-masking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Texture-based EM masking
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inputs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Inputs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#volume" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        volume
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#block_size" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        block_size
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#texture_sigma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        texture_sigma
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#edge_sigma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        edge_sigma
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#min_region_size" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        min_region_size
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Outputs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Outputs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mask" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        mask
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#confidence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        confidence
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3d-u-net-monai-for-brain-vs-non-brain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3D U-Net (MONAI) for brain vs non-brain
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3D U-Net (MONAI) for brain vs non-brain">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-design-points" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key design points
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#training" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Training
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Training">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#data-and-transforms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data and transforms:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inference
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Inference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#patch-based-test-inference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Patch-based test inference
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#whole-volume-sliding-window-inference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Whole-volume sliding-window inference
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -553,6 +848,34 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Operational Guidance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tuning-texture-based-masking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tuning texture-based masking
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-the-ml-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using the ML model
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1469,6 +1792,67 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Alternatives Considered">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-global-intensity-thresholding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Global intensity thresholding
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-dog-only-edge-based-masking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. DoG-only / edge-based masking
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-texture-structure-analysis-current-cv-baseline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Texture / structure analysis (current CV baseline)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-heavier-ml-models-large-u-nets-transformers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Heavier ML models (large U-Nets / transformers)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-no-dedicated-mask-let-every-module-handle-resin-itself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. No dedicated mask (let every module handle resin itself)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1502,6 +1886,240 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Implementation Notes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-texture-based-em-masking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Texture-based EM masking
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inputs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Inputs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#volume" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        volume
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#block_size" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        block_size
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#texture_sigma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        texture_sigma
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#edge_sigma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        edge_sigma
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#min_region_size" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        min_region_size
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Outputs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Outputs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mask" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        mask
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#confidence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        confidence
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3d-u-net-monai-for-brain-vs-non-brain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3D U-Net (MONAI) for brain vs non-brain
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3D U-Net (MONAI) for brain vs non-brain">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-design-points" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key design points
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#training" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Training
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Training">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#data-and-transforms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data and transforms:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inference
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Inference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#patch-based-test-inference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Patch-based test inference
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#whole-volume-sliding-window-inference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Whole-volume sliding-window inference
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1512,6 +2130,34 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Operational Guidance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tuning-texture-based-masking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tuning texture-based masking
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-the-ml-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using the ML model
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1551,55 +2197,428 @@
 <p>This page explains the decisions we made, alternatives considered, trade-offs, and future work.</p>
 </blockquote>
 <h2 id="problem-goal">Problem / Goal<a class="headerlink" href="#problem-goal" title="Permanent link">&para;</a></h2>
-<p>What outcome are we optimizing for?</p>
-<h2 id="alternatives-considered">Alternatives Considered<a class="headerlink" href="#alternatives-considered" title="Permanent link">&para;</a></h2>
+<p><strong>What outcome are we optimising for?</strong></p>
+<p>We want a reliable, lightweight way to generate <strong>brain vs non-brain masks</strong> for large EM volumes. These masks are used upstream (or downstream, however you see it) of other Catena modules (LSDs, synapses, mitochondria, neurotransmitters) to:</p>
 <ul>
-<li>Option A – pros/cons</li>
-<li>Option B – pros/cons</li>
-<li>Option C – pros/cons</li>
+<li>restrict heavy models to <strong>brain / VNC tissue</strong> only,</li>
+<li>avoid wasting GPU/CPU on resin and artefacts,</li>
+<li>reduce false positives (e.g. "neuron segmentations", "synapses" on resin),</li>
+<li>standardise which voxels are “in play” across different pipelines.</li>
 </ul>
+<p>The goal is <strong>not</strong> to solve fine semantic segmentation of all tissues, but to provide a <strong>clean, binary mask</strong> that says:</p>
+<ul>
+<li>“this voxel belongs to brain / ventral nerve cord”, versus  </li>
+<li>“this is resin, trachea, or something we don’t plan to segment”.</li>
+</ul>
+<p>We also want the solution to be:</p>
+<ul>
+<li>easy to run on a single workstation,</li>
+<li>minimally dependent on exotic libraries,</li>
+<li>and robust enough to generalise to new EM volumes with limited re-tuning (less hyper-parameter optimisation).</li>
+</ul>
+<h2 id="alternatives-considered">Alternatives Considered<a class="headerlink" href="#alternatives-considered" title="Permanent link">&para;</a></h2>
+<h3 id="1-global-intensity-thresholding">1. Global intensity thresholding<a class="headerlink" href="#1-global-intensity-thresholding" title="Permanent link">&para;</a></h3>
+<p><strong>Idea:</strong> Use simple thresholds on intensity (or a histogram-based method like Otsu) to separate bright resin from darker tissue.</p>
+<ul>
+<li>
+<p><strong>Pros</strong></p>
+<ul>
+<li>Extremely simple to implement.</li>
+<li>No training data required.</li>
+<li>Very fast.</li>
+</ul>
+</li>
+<li>
+<p><strong>Cons</strong></p>
+<ul>
+<li>Fails when tissue and resin have overlapping intensity ranges.</li>
+<li>Sensitive to staining / imaging differences across datasets.</li>
+<li>Blind to local texture; easily confuses trachea, artefacts, and brain.</li>
+</ul>
+</li>
+</ul>
+<p>We found this too brittle for practical use beyond tiny toy examples.</p>
+<h3 id="2-dog-only-edge-based-masking">2. DoG-only / edge-based masking<a class="headerlink" href="#2-dog-only-edge-based-masking" title="Permanent link">&para;</a></h3>
+<p><strong>Idea:</strong> Use a <strong>Difference of Gaussians (DoG)</strong> and gradient magnitude to highlight “structured” regions and suppress smooth resin; threshold the result.</p>
+<ul>
+<li>
+<p><strong>Pros</strong></p>
+<ul>
+<li>Still classical CV; no labels needed.</li>
+<li>Picks up fine structure better than raw intensity.</li>
+<li>Works as a quick sanity-check baseline.</li>
+</ul>
+</li>
+<li>
+<p><strong>Cons</strong></p>
+<ul>
+<li>DoG alone produces noisy and fragmented masks.</li>
+<li>Struggles in regions where resin has structure (e.g. artefacts, cracks).</li>
+<li>Cannot explicitly distinguish trachea and other non-brain structures.</li>
+</ul>
+</li>
+</ul>
+<p>DoG on its own was not sufficient; it motivated the <strong>texture-based</strong> approach instead.</p>
+<h3 id="3-texture-structure-analysis-current-cv-baseline">3. Texture / structure analysis (current CV baseline)<a class="headerlink" href="#3-texture-structure-analysis-current-cv-baseline" title="Permanent link">&para;</a></h3>
+<p><strong>Idea:</strong> Combine DoG with <strong>local texture and structure analysis</strong> (e.g. variance, structure tensor) on small blocks to separate “biological-looking” texture from smoother background.</p>
+<ul>
+<li>
+<p><strong>Pros</strong></p>
+<ul>
+<li>Much better than DoG alone for separating tissue from pure resin.</li>
+<li>No training labels required.</li>
+<li>Gives a quick, interpretable initial mask and confidence map.</li>
+</ul>
+</li>
+<li>
+<p><strong>Cons</strong></p>
+<ul>
+<li>Still purely local; no notion of semantics like “brain vs trachea”.</li>
+<li>Requires some parameter tuning per dataset (block size, sigmas, region size).</li>
+<li>Will include non-brain tissues that have similar texture to brain.</li>
+</ul>
+</li>
+</ul>
+<p>We keep this as a <strong>baseline</strong> and backup path, but not as the primary mask generator.</p>
+<h3 id="4-heavier-ml-models-large-u-nets-transformers">4. Heavier ML models (large U-Nets / transformers)<a class="headerlink" href="#4-heavier-ml-models-large-u-nets-transformers" title="Permanent link">&para;</a></h3>
+<p><strong>Idea:</strong> Use a deep 3D U-Net (or even transformers) with extensive augmentation, multi-scale context, voxel-size encoding, etc.</p>
+<ul>
+<li>
+<p><strong>Pros</strong></p>
+<ul>
+<li>Potentially very strong performance.</li>
+<li>Can model complex tissue variation and imaging artefacts.</li>
+<li>Easier to extend to multi-class labelling (brain, trachea, resin, etc.).</li>
+</ul>
+</li>
+<li>
+<p><strong>Cons</strong></p>
+<ul>
+<li>More complex to train and tune.</li>
+<li>Requires a lot of labeled data for training.</li>
+<li>Higher compute and memory requirements.</li>
+<li>Harder to document and maintain as a “simple module” for general users.</li>
+</ul>
+</li>
+</ul>
+<p>This felt overkill for a <strong>binary, upstream mask</strong> whose main role is to gate other modules.</p>
+<h3 id="5-no-dedicated-mask-let-every-module-handle-resin-itself">5. No dedicated mask (let every module handle resin itself)<a class="headerlink" href="#5-no-dedicated-mask-let-every-module-handle-resin-itself" title="Permanent link">&para;</a></h3>
+<p><strong>Idea:</strong> Skip this module; let each downstream model learn to ignore resin on its own.</p>
+<ul>
+<li>
+<p><strong>Pros</strong></p>
+<ul>
+<li>Fewer components and no extra training step.</li>
+<li>Simplifies the pipeline on paper.</li>
+</ul>
+</li>
+<li>
+<p><strong>Cons</strong></p>
+<ul>
+<li>Every module re-learns the same “ignore resin” behaviour (no segments or synapses are generated on resin parts).</li>
+<li>Wasted computation on non-brain regions in every stage.</li>
+<li>Harder to debug what each model is actually seeing.</li>
+</ul>
+</li>
+</ul>
+<p>Given Catena’s modular design, a shared mask is the more efficient and interpretable choice.</p>
 <h2 id="decision">Decision<a class="headerlink" href="#decision" title="Permanent link">&para;</a></h2>
-<p>What we chose and why.</p>
+<p><strong>What we chose and why.</strong></p>
+<p>We adopted a <strong>two-path design</strong>:</p>
+<ol>
+<li>A <strong>classical CV path</strong> based on <strong>texture-based masking</strong>, which:</li>
+<li>is cheap and label-free,</li>
+<li>provides an initial “biological vs background” mask,</li>
+<li>
+<p>outputs a confidence map that can be combined with learned models.</p>
+</li>
+<li>
+<p>A <strong>simple 3D U-Net (MONAI)</strong> trained for <strong>brain vs non-brain</strong> semantic segmentation on downsampled volumes, which:</p>
+</li>
+<li>uses minimal but targeted augmentation to generalise across EM volumes,</li>
+<li>is trained in pixel space (no voxel-size encoding) to keep things simple,</li>
+<li>produces masks that transfer reasonably well to unseen EM data.</li>
+</ol>
+<p>The classical path is treated as a <strong>baseline and diagnostic tool</strong>; the U-Net path is the <strong>recommended default</strong> for production masks.</p>
 <h2 id="trade-offs">Trade-offs<a class="headerlink" href="#trade-offs" title="Permanent link">&para;</a></h2>
-<p>Compute, memory, DX, accuracy, portability, etc.</p>
+<ul>
+<li><strong>Accuracy vs complexity</strong></li>
+<li>The 3D U-Net is intentionally small and simple. We trade a bit of peak accuracy for ease of training and reproducibility.</li>
+<li>
+<p>The texture-based method is less accurate but more explainable and robust when labels are scarce.</p>
+</li>
+<li>
+<p><strong>Data / label requirements</strong></p>
+</li>
+<li>Texture-based masking needs <strong>no labels</strong>.</li>
+<li>
+<p>The U-Net does require semantic labels for at least one volume, but only at a coarse brain vs non-brain level. We use a downsampled version of the volume to speed up training (usually at 50um <code>scale 5</code> isotropic from FIBSEM).</p>
+</li>
+<li>
+<p><strong>Generalisation</strong></p>
+</li>
+<li>Texture-based masking is sensitive to resolution and noise, but not to annotation style.</li>
+<li>
+<p>The U-Net generalises surprisingly well to unseen volumes but will eventually drift if the imaging domain is very different (different species, staining, etc.).</p>
+</li>
+<li>
+<p><strong>Performance / compute</strong></p>
+</li>
+<li>Texture-based masking is CPU-friendly and works fine on modest hardware. Masks often generated on Mac M1 Pro with 16GB RAM in a few minutes.</li>
+<li>The 3D U-Net benefits from a GPU but is still modest in size; it can run on a single workstation without heroic resources (and even on CPU-only machines like a Mac M1 Pro). Training typically takes a few hours on a single GPU.</li>
+</ul>
 <h2 id="implementation-notes">Implementation Notes<a class="headerlink" href="#implementation-notes" title="Permanent link">&para;</a></h2>
-<p>Key parameters, scripts, data flow.</p>
-<p>Inputs</p>
-<p>volume
-3D EM volume (or 2D slice stack) in which we want to separate “brain-like texture” from background resin / junk.</p>
-<p>block_size
-Size of the local window (in pixels/voxels) used for computing texture statistics.</p>
-<p>Smaller blocks → more detailed, sensitive to small variations but also to noise.</p>
-<p>Larger blocks → smoother, more robust, but can miss tiny islands of tissue.
-In practice, 64 is a good starting point for downsampled FIBSEM; scale it roughly with your in-plane resolution.</p>
-<p>texture_sigma
-Standard deviation of the Gaussian used in the texture filter (e.g. for smoothing features such as local variance or structure tensor).</p>
-<p>Lower values → focus on very fine texture details (good for high-res, noisy EM).</p>
-<p>Higher values → capture coarser patterns, ignore tiny fluctuations.
-If the mask looks very noisy, try increasing this slightly.</p>
-<p>edge_sigma
-Standard deviation of the Gaussian used in the edge / gradient filter. This controls the spatial scale of edges that contribute to the mask.</p>
-<p>Small values (e.g. 0.5) → respond to fine edges and thin structures.</p>
-<p>Larger values → emphasise broader transitions, ignore tiny speckles.
-If you’re missing thin tissue at boundaries, decrease this a bit; if you’re getting a lot of edge noise, increase it.</p>
-<p>min_region_size
-Minimum size (in pixels/voxels) of a connected component to keep in the final mask. Everything smaller is dropped as noise.</p>
-<p>Increase this if you see lots of tiny specks of “tissue” in resin.</p>
-<p>Decrease it if you actually care about very small islands of brain tissue.
-This should be tuned relative to your image size and downsampling; 250 is a reasonable starting point for typical subvolumes.</p>
-<p>Outputs</p>
-<p>mask
-Binary mask (same shape as volume): 1 for “texture consistent with tissue we care about”, 0 for background / non-brain.</p>
-<p>confidence
-Float array with a continuous score per pixel/voxel (e.g. how strongly the local texture looks like “brain”).
-This is useful if you want to:</p>
-<p>tweak the threshold later without recomputing everything,</p>
-<p>visualise “soft” tissue likelihood,</p>
-<p>or combine this with other signals (e.g. learned model logits) before making a hard mask.</p>
+<p>The module currently has two main components:</p>
+<ol>
+<li><strong>Texture-based EM masking</strong> (classical CV)</li>
+<li><strong>3D U-Net brain vs non-brain model</strong> (MONAI)</li>
+</ol>
+<h3 id="1-texture-based-em-masking">1. Texture-based EM masking<a class="headerlink" href="#1-texture-based-em-masking" title="Permanent link">&para;</a></h3>
+<p>Core function:</p>
+<div class="highlight"><pre><span></span><code><span class="n">mask</span><span class="p">,</span> <span class="n">confidence</span> <span class="o">=</span> <span class="n">em_texture_masking</span><span class="p">(</span>
+    <span class="n">volume</span><span class="p">,</span>
+    <span class="n">block_size</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>
+    <span class="n">texture_sigma</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">edge_sigma</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">min_region_size</span><span class="o">=</span><span class="mi">250</span>
+<span class="p">)</span>
+</code></pre></div>
+<h3 id="inputs">Inputs<a class="headerlink" href="#inputs" title="Permanent link">&para;</a></h3>
+<h4 id="volume"><code>volume</code><a class="headerlink" href="#volume" title="Permanent link">&para;</a></h4>
+<p>3D EM volume (or 2D slice stack) in which we want to separate “brain-like texture” from background resin / junk.</p>
+<h4 id="block_size"><code>block_size</code><a class="headerlink" href="#block_size" title="Permanent link">&para;</a></h4>
+<p>Size of the local window (in pixels/voxels) used for computing texture statistics.</p>
+<ul>
+<li>Smaller blocks → more detailed, sensitive to small variations but also to noise.  </li>
+<li>Larger blocks → smoother, more robust, but can miss tiny islands of tissue.  </li>
+</ul>
+<p>In practice, <code>64</code> is a good starting point for downsampled FIBSEM; scale it roughly with your in-plane resolution.</p>
+<h4 id="texture_sigma"><code>texture_sigma</code><a class="headerlink" href="#texture_sigma" title="Permanent link">&para;</a></h4>
+<p>Standard deviation of the Gaussian used in the <strong>texture filter</strong> (e.g. for smoothing features such as local variance or structure tensor).</p>
+<ul>
+<li>Lower values → focus on very fine texture details (good for high-res, noisy EM).  </li>
+<li>Higher values → capture coarser patterns, ignore tiny fluctuations.  </li>
+</ul>
+<p>If the mask looks very noisy, try <strong>increasing</strong> this slightly.</p>
+<h4 id="edge_sigma"><code>edge_sigma</code><a class="headerlink" href="#edge_sigma" title="Permanent link">&para;</a></h4>
+<p>Standard deviation of the Gaussian used in the <strong>edge / gradient filter</strong>. This controls the spatial scale of edges that contribute to the mask.</p>
+<ul>
+<li>Small values (e.g. <code>0.5</code>) → respond to fine edges and thin structures.  </li>
+<li>Larger values → emphasise broader transitions, ignore tiny speckles.  </li>
+</ul>
+<p>If you’re missing thin tissue at boundaries, <strong>decrease</strong> this a bit; if you’re getting a lot of edge noise, <strong>increase</strong> it.</p>
+<h4 id="min_region_size"><code>min_region_size</code><a class="headerlink" href="#min_region_size" title="Permanent link">&para;</a></h4>
+<p>Minimum size (in pixels/voxels) of a connected component to keep in the final mask. Everything smaller is dropped as noise.</p>
+<ul>
+<li>Increase this if you see lots of tiny specks of “tissue” in resin.  </li>
+<li>Decrease it if you actually care about very small islands of brain tissue.  </li>
+</ul>
+<p>This should be tuned relative to your image size and downsampling; <code>250</code> is a reasonable starting point for typical subvolumes.</p>
+<h3 id="outputs">Outputs<a class="headerlink" href="#outputs" title="Permanent link">&para;</a></h3>
+<h4 id="mask"><code>mask</code><a class="headerlink" href="#mask" title="Permanent link">&para;</a></h4>
+<p>Binary mask (same shape as <code>volume</code>): <code>1</code> for “texture consistent with tissue we care about”, <code>0</code> for background / non-brain.</p>
+<h4 id="confidence"><code>confidence</code><a class="headerlink" href="#confidence" title="Permanent link">&para;</a></h4>
+<p>Float array with a continuous score per pixel/voxel (e.g. how strongly the local texture looks like “brain”).</p>
+<p>Useful if you want to:</p>
+<ul>
+<li>tweak thresholds later without recomputing everything,  </li>
+<li>visualise “soft” tissue likelihood,  </li>
+<li>combine this with other signals (e.g. U-Net logits) before making a hard mask.</li>
+</ul>
+<h2 id="3d-u-net-monai-for-brain-vs-non-brain">3D U-Net (MONAI) for brain vs non-brain<a class="headerlink" href="#3d-u-net-monai-for-brain-vs-non-brain" title="Permanent link">&para;</a></h2>
+<h3 id="key-design-points">Key design points<a class="headerlink" href="#key-design-points" title="Permanent link">&para;</a></h3>
+<p>The ML path uses a <strong>3D U-Net implemented in MONAI</strong> to predict a <em>single-channel</em> foreground mask:</p>
+<ul>
+<li><code>1</code> ≈ brain / VNC tissue  </li>
+<li><code>0</code> ≈ non-brain (resin, trachea, artefacts, etc.)</li>
+</ul>
+<p>Everything is trained in <strong>voxel / pixel space</strong> (we do not encode voxel size explicitly).</p>
+<hr />
+<h3 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">&para;</a></h3>
+<p>The model is a fairly standard, compact 3D U-Net:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">monai.networks.nets</span><span class="w"> </span><span class="kn">import</span> <span class="n">UNet</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">UNet</span><span class="p">(</span>
+    <span class="n">spatial_dims</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">in_channels</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">out_channels</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">channels</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span>
+    <span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="n">num_res_units</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>
+<p>spatial_dims=3 → full 3D convolutions.</p>
+</li>
+<li>
+<p>Input: single-channel EM volume (grayscale).</p>
+</li>
+<li>
+<p>Output: single-channel logit volume (brain foreground probability after sigmoid).</p>
+</li>
+</ul>
+<p>Depth and channels are deliberately modest so the model can train and infer on a single GPU / workstation.</p>
+<h3 id="training">Training<a class="headerlink" href="#training" title="Permanent link">&para;</a></h3>
+<h4 id="data-and-transforms">Data and transforms:<a class="headerlink" href="#data-and-transforms" title="Permanent link">&para;</a></h4>
+<ul>
+<li>
+<p>EM volumes and masks are loaded from TIFF/Zarr.</p>
+</li>
+<li>
+<p>A custom Dataset yields patches with keys like 'image' and 'mask'.</p>
+</li>
+<li>
+<p>MONAI / TorchIO transforms handle:</p>
+<ul>
+<li>
+<p>channel handling and intensity scaling,</p>
+</li>
+<li>
+<p>simple spatial augmentation (flips, 90° rotations, zoom),</p>
+</li>
+<li>
+<p>optional Gaussian noise.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Data is explicitly split into train, validation, and test sets.</p>
+</li>
+</ul>
+<p><strong>Loss</strong>: DiceCELoss with sigmoid=True, suitable for binary foreground prediction from a single logit channel.</p>
+<p><strong>Optimiser</strong>: Adam with a conservative learning rate <code>1e-4</code>.</p>
+<h3 id="inference">Inference<a class="headerlink" href="#inference" title="Permanent link">&para;</a></h3>
+<h4 id="patch-based-test-inference">Patch-based test inference<a class="headerlink" href="#patch-based-test-inference" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="n">test_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">test_loader</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="s2">&quot;./outputs/runX&quot;</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>
+<p>Loops over a test_loader of patches.</p>
+</li>
+<li>
+<p>Saves predicted patches and corresponding ground-truth masks (TIFF).</p>
+</li>
+<li>
+<p>Reports average Dice and Jaccard across the test set.</p>
+</li>
+</ul>
+<h4 id="whole-volume-sliding-window-inference">Whole-volume sliding-window inference<a class="headerlink" href="#whole-volume-sliding-window-inference" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="n">run_inference_whole_volume</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">,</span>
+    <span class="n">data_path</span><span class="p">,</span>
+    <span class="n">output_path</span><span class="p">,</span>
+    <span class="n">patch_size</span><span class="o">=</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span>
+    <span class="n">overlap</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
+    <span class="n">device</span><span class="o">=</span><span class="s2">&quot;cuda:0&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>
+<p>Loads the full 3D EM volume (TIFF or Zarr).</p>
+</li>
+<li>
+<p>Applies simple MONAI intensity preprocessing (scaling / normalisation).</p>
+</li>
+<li>
+<p>Tiles the volume into overlapping 3D patches (patch_size), runs the model on each, and stitches them back together with overlap-handling.</p>
+</li>
+<li>
+<p>Writes the predicted mask volume back to disk as TIFF or Zarr.</p>
+</li>
+</ul>
+<p>A variant of this is also provided with a smaller patch size (e.g. (32, 32, 32) and larger overlap) to trade off memory vs smoothness.</p>
 <h2 id="operational-guidance">Operational Guidance<a class="headerlink" href="#operational-guidance" title="Permanent link">&para;</a></h2>
-<p>Tuning tips, failure modes, troubleshooting.</p>
+<h4 id="tuning-texture-based-masking">Tuning texture-based masking<a class="headerlink" href="#tuning-texture-based-masking" title="Permanent link">&para;</a></h4>
+<ul>
+<li>
+<p>Start with the default parameters:</p>
+<ul>
+<li>
+<p><code>block_size = 64</code></p>
+</li>
+<li>
+<p><code>texture_sigma = 1.0</code></p>
+</li>
+<li>
+<p><code>edge_sigma = 0.5</code></p>
+</li>
+<li>
+<p><code>min_region_size = 250</code></p>
+</li>
+</ul>
+</li>
+<li>
+<p>If the mask is too noisy:</p>
+<ul>
+<li>
+<p><code>increase texture_sigma</code></p>
+</li>
+<li>
+<p><code>increase min_region_size</code></p>
+</li>
+</ul>
+</li>
+<li>
+<p>If you are missing thin tissue:</p>
+<ul>
+<li>
+<p><code>decrease edge_sigma</code></p>
+</li>
+<li>
+<p><code>slightly decrease min_region_size</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<p>Always inspect a few slices of volume, mask, and confidence overlays to make sure the behaviour makes sense.</p>
+<h4 id="using-the-ml-model">Using the ML model<a class="headerlink" href="#using-the-ml-model" title="Permanent link">&para;</a></h4>
+<ul>
+<li>
+<p>Use the texture-based mask as a quick check: if it completely fails, you likely have a very different domain and should re-examine your input.</p>
+</li>
+<li>
+<p>For new datasets:</p>
+<ul>
+<li>
+<p>Run the trained U-Net on a subset.</p>
+</li>
+<li>
+<p>Post-process the predictions.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Overlay EM + mask and visually check:</p>
+<ul>
+<li>
+<p>tissue boundaries,</p>
+</li>
+<li>
+<p>trachea / artefacts,</p>
+</li>
+<li>
+<p>any systematic failure modes (e.g. over-masking near edges).</p>
+</li>
+</ul>
+</li>
+<li>
+<p>If performance degrades significantly:</p>
+<ul>
+<li>
+<p>annotate a small ROI in the new dataset,</p>
+</li>
+<li>
+<p>fine-tune the existing model rather than training from scratch.</p>
+</li>
+</ul>
+</li>
+</ul>
 <h2 id="future-work-open-questions">Future Work / Open Questions<a class="headerlink" href="#future-work-open-questions" title="Permanent link">&para;</a></h2>
-<p>What we plan to revisit and why.</p>
+<p><strong>Multi-class tissue labelling</strong>
+Extend beyond binary brain vs non-brain to explicitly label trachea, neuropil vs soma, etc., for more fine-grained control of downstream modules.</p>
+<p><strong>Domain adaptation</strong>
+Explore semi-supervised or unsupervised domain adaptation to handle new EM modalities with minimal additional labels.</p>
 
 
 

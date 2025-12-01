@@ -68,7 +68,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#synful" class="md-skip">
+        <a href="#simpsyn" class="md-skip">
           Skip to content
         </a>
       
@@ -822,6 +822,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -838,6 +856,36 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-simpsyn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is SimpSyn?
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1359,6 +1407,25 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-simpsyn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is SimpSyn?
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1377,12 +1444,25 @@
   
 
 
-<h1 id="synful">Synful<a class="headerlink" href="#synful" title="Permanent link">&para;</a></h1>
+<h1 id="simpsyn">SimpSyn<a class="headerlink" href="#simpsyn" title="Permanent link">&para;</a></h1>
 <p>Short overview of what this module does and links to usage.</p>
 <ul>
-<li><strong>Install &amp; Usage:</strong> See the module's README and scripts.</li>
+<li><strong>Install &amp; Usage:</strong> See the module's <a href="https://github.com/Mohinta2892/catena/tree/dev/synapse_detection/simpsyn">README</a> and scripts in GitHub to get more up-to-date information.</li>
 <li><strong>Design Choices:</strong> See <a href="design-choices/">Design Choices</a> for the "why" behind the "what".</li>
 </ul>
+<p>For a primer to "What synapse detection is?", check <a href="./index-synapse-detection.md">here.</a></p>
+<h2 id="what-is-simpsyn">What is SimpSyn?<a class="headerlink" href="#what-is-simpsyn" title="Permanent link">&para;</a></h2>
+<p><strong>SimpSyn</strong> is our ultra-light weight model for synapse detection. The name itself stands for <strong>Simple Synapse Detection</strong>.</p>
+<p>With SimpSyn we rethink the synapse detection problem as a segmentation task, where both pre and post sites are segmented as masks and are post-processed into partners via nearest neighbour assignments. <em>This deviates from Synful's joint learning of a mask segmentation and regression tasks, thereby being computationally efficient.</em></p>
+<p>SimpSyn uses a 3D Residual U-Net for synapse detection that predicts two output channels: one corresponding to pre-synaptic regions and the other to post-synaptic regions. To achieve this, a spherical 3D region is generated and centered at the coordinates of the pre-synaptic and post-synaptic points. These output masks are subsequently processed using connected component labelling to isolate individual synaptic structures. To establish correspondence between pre-synaptic and post-synaptic sites, each post-synaptic component is paired with its nearest pre-synaptic counterpart based on the nearest neighbour criterion.</p>
+<p><img width="1031" height="550" alt="image" src="https://github.com/user-attachments/assets/68b965c0-0dc0-43c4-a638-7f7d57e60b31" /></p>
+<h1 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h1>
+<p><strong>SIMPSYN is built within Biapy</strong>.
+Please follow the <a href="https://biapy.readthedocs.io/en/latest/get_started/installation.html">installation instructions here</a>.</p>
+<p><code>Kindly note SimpSyn is currently being tested on various other datasets as our paper is under review.</code></p>
+<p>Complete documentation will be released soon.</p>
+<h1 id="citing-simpsyn">Citing SIMPSYN<a class="headerlink" href="#citing-simpsyn" title="Permanent link">&para;</a></h1>
+<p>Please cite our <a href="https://arxiv.org/html/2509.17041v1">preprint on Towards Generalized Synapse Detection Across Invertebrate Species</a>.</p>
 
 
 

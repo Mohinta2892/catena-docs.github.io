@@ -1486,6 +1486,14 @@
 <li>panoptic / instance-style ML models that directly predict object instances.</li>
 </ol>
 <p>The Catena mitochondria module is designed to support this two-stage view: produce robust semantic masks first, and then allow you to lift them to instance level when needed.</p>
+<figure>
+<p><img alt="Mitochondria Segmentation" src="../../assets/mito-model-schematic.png" width="800" />
+  </p>
+<figcaption>
+  <strong>Figure X. Mitochondria segmentation architectures.</strong>
+A) MONAI-based 3D U-Net baseline. Raw FIBSEM EM patches (left) are passed through a standard U-Net to produce semantic mitochondria masks (middle), which are then converted into instance labels (right). B) Residual U-Net adapted from Xie et al. (2025) for FIBSEM data. Residual blocks are added to the encoder--decoder backbone, improving feature reuse and gradient flow while keeping the same semantic-to-instance segmentation pipeline as in A.
+  </figcaption>
+</figure>
 <h2 id="why-do-we-care">Why do we care?<a class="headerlink" href="#why-do-we-care" title="Permanent link">&para;</a></h2>
 <p>Mitochondria carry a lot of useful information for connectomics:</p>
 <ul>

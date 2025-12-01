@@ -1548,9 +1548,9 @@
 </ul>
 <p>Catena's synapse module is designed with this <strong>point-based mindset</strong>: it aims to work with lightweight, human-friendly annotations while staying compatible with more traditional cleft-based workflows if you already have them.</p>
 <h2 id="data-curation">Data Curation<a class="headerlink" href="#data-curation" title="Permanent link">&para;</a></h2>
-<p>Currently, synapse annotations exist multiple formats. They can be stored as in the <a href="https://codalab.lisn.upsaclay.fr/competitions/9169">WASPSYN challenge</a> as .h5 or in <a href="https://cremi.org/data/">CREMI format </a>as .hdf or even as <code>.jsons</code> and <code>.zarrs</code>.</p>
+<p>Currently, synapse annotations exist multiple formats. They can be stored as in the <a href="https://codalab.lisn.upsaclay.fr/competitions/9169">WASPSYN challenge</a> as <code>.h5</code> or in <a href="https://cremi.org/data/">CREMI format </a>as <code>.hdf</code> or even as <code>.jsons</code> and <code>.zarrs</code>.</p>
 <p>Data is also often stored a XYZ or ZYX or even ZXY. This causes a lot of discrepancies during model training.</p>
-<p>Within Catena, we spent a lot of time (because it is a hard job) to curate these these datasets into one format. We chose the CREMI format since it is directly compatible with Synful and can be extended to support other datasets. CREMI format enables us store all data in ZYX, all annotations in nm space and we explicitly mention each RoIs resolution and offset within <code>.hdf</code> itself. </p>
+<p>Within Catena, we spent a lot of time (because it is a hard job) to curate these these datasets into one format. <strong>We chose the CREMI format</strong> since it is directly compatible with Synful and can be extended to support other datasets. CREMI format enables us store all data in ZYX, all annotations in nm space and we explicitly mention each RoIs resolution and offset within <code>.hdf</code> itself. </p>
 <p>We share our conversion code <a href="https://github.com/Mohinta2892/catena/tree/dev/synapse_detection/synful/pytorch/data_utils/download_data/meta_analysis/scripts">here.</a></p>
 
 

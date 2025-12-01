@@ -1534,7 +1534,7 @@
 <li>Post-process these masks into discrete synaptic objects and then into edges between neurons (often using another ML network for polarity assignment).</li>
 </ul>
 <p>While effective, <strong>cleft masks are tedious to generate</strong>: they require dense, voxel-level annotation for every synapse, which does not scale well to large volumes or multiple datasets.</p>
-<p>To reduce annotation burden, more recent approaches such as <strong>Synful</strong>, <strong>AdaSyn</strong>, and <strong>SimpSyn</strong> operate on <strong>point annotations</strong>:</p>
+<p>To reduce annotation burden, more recent approaches such as <strong>Synful</strong>, <strong><a href="https://arxiv.org/abs/2308.16461">AdaSyn</a></strong>, and <strong>SimpSyn</strong> operate on <strong>point annotations</strong>:</p>
 <ul>
 <li>Human annotators mark synapses with one or a few points per site (e.g. pre- and post-synaptic centroids).  </li>
 <li>Networks are trained to detect or refine these point locations, sometimes together with small local masks.  </li>
@@ -1550,8 +1550,16 @@
 <h2 id="data-curation">Data Curation<a class="headerlink" href="#data-curation" title="Permanent link">&para;</a></h2>
 <p>Currently, synapse annotations exist multiple formats. They can be stored as in the <a href="https://codalab.lisn.upsaclay.fr/competitions/9169">WASPSYN challenge</a> as <code>.h5</code> or in <a href="https://cremi.org/data/">CREMI format </a>as <code>.hdf</code> or even as <code>.jsons</code> and <code>.zarrs</code>.</p>
 <p>Data is also often stored a XYZ or ZYX or even ZXY. This causes a lot of discrepancies during model training.</p>
-<p>Within Catena, we spent a lot of time (because it is a hard job) to curate these these datasets into one format. <strong>We chose the CREMI format</strong> since it is directly compatible with Synful and can be extended to support other datasets. CREMI format enables us store all data in ZYX, all annotations in nm space and we explicitly mention each RoIs resolution and offset within <code>.hdf</code> itself. </p>
+<p>Within Catena, we spent a lot of time (because it is a hard job) to curate these these datasets into one format. <strong>We chose the CREMI format</strong> since it is directly compatible with Synful and can be extended to support other datasets. CREMI format enables us store all data in ZYX, all annotations in nm space and we explicitly mention each RoIs resolution and offset within <code>.hdf</code> itself.  Some examples are below in Figure1</p>
 <p>We share our conversion code <a href="https://github.com/Mohinta2892/catena/tree/dev/synapse_detection/synful/pytorch/data_utils/download_data/meta_analysis/scripts">here.</a></p>
+<figure>
+<p><img alt="Synapse Curation" src="../../../assets/synapse-curation-examples.png" width="800" />
+  </p>
+<figcaption>
+  <strong>Figure 1. Examples of synapse curation across datasets.</strong>
+    A: Larval Drosophila FIBSEM. B: Mouse neocortex (MiCRoNS). C: Human H01. For each dataset, (i) shows the raw EM context with a zoom-in around a candidate synapse, (ii) shows the curated synaptic ultrastructure mask, and (iii) shows point-based annotations and partner assignments (pre- and post-synaptic sites) used for training and evaluation in Catena’s synapse detection module.
+  </figcaption>
+</figure>
 
 
 

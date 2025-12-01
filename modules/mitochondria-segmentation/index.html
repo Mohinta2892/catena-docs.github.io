@@ -939,6 +939,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -955,6 +973,47 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-mitochondria-segmentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is mitochondria segmentation?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-do-we-care" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why do we care?
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1357,6 +1416,36 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-mitochondria-segmentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is mitochondria segmentation?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-do-we-care" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why do we care?
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1378,8 +1467,204 @@
 <h1 id="mitochondria-segmentation">Mitochondria Segmentation<a class="headerlink" href="#mitochondria-segmentation" title="Permanent link">&para;</a></h1>
 <p>Short overview of what this module does and links to usage.</p>
 <ul>
-<li><strong>Install &amp; Usage:</strong> See the module's README and scripts.</li>
+<li><strong>Install &amp; Usage:</strong> See the module's README and scripts in the GitHub repository for the most up-to-date instructions.</li>
 <li><strong>Design Choices:</strong> See <a href="design-choices/">Design Choices</a> for the "why" behind the "what".</li>
+</ul>
+<h2 id="what-is-mitochondria-segmentation">What is mitochondria segmentation?<a class="headerlink" href="#what-is-mitochondria-segmentation" title="Permanent link">&para;</a></h2>
+<p>Mitochondria are often called the powerhouses of the cell. In neurons they are <strong>numerous</strong>, can span long stretches of neurites, cluster around synaptic junctions, and vary widely in shape and size.  </p>
+<p>In EM volumes, mitochondria segmentation is usually done in two conceptual stages, very similar to neuron segmentation:</p>
+<ol>
+<li>
+<p><strong>Semantic segmentation</strong><br />
+   First we identify all voxels that belong to mitochondria, without worrying about which mitochondrion is which. This already gives us their <strong>localisation</strong> and overall <strong>shapes</strong>. Many projects stop here because they only need "mitochondrial tissue" vs "everything else".</p>
+</li>
+<li>
+<p><strong>Instance segmentation</strong><br />
+   When individual identities matter (e.g. counting mitochondria per bouton, following a single mitochondrion along a neurite), we give each object a unique label. This can be done by:</p>
+</li>
+<li>watershed + agglomeration on the semantic mask, or  </li>
+<li>panoptic / instance-style ML models that directly predict object instances.</li>
+</ol>
+<p>The Catena mitochondria module is designed to support this two-stage view: produce robust semantic masks first, and then allow you to lift them to instance level when needed.</p>
+<h2 id="why-do-we-care">Why do we care?<a class="headerlink" href="#why-do-we-care" title="Permanent link">&para;</a></h2>
+<p>Mitochondria carry a lot of useful information for connectomics:</p>
+<ul>
+<li>
+<p><strong>Synaptic strength proxies</strong><br />
+  The <strong>number, size, and distribution</strong> of mitochondria have been linked to synaptic strength and metabolic demand at boutons and dendritic spines. Having good segmentation lets us quantify these relationships systematically.</p>
+</li>
+<li>
+<p><strong>Cell-type and cell-state readouts</strong><br />
+  Mitochondrial morphology and abundance can act as a proxy for <strong>cell type</strong><br />
+  (e.g. <a href="https://pubmed.ncbi.nlm.nih.gov/19703655/">Kuznetsov et al., 2009</a>),<br />
+  and even help <strong>control or report cell fate</strong> in certain contexts<br />
+  (e.g. <a href="https://doi.org/10.1242/jcs.263403">Lee-Glover et al., 2025</a>).<br />
+  Having mitochondria segmented in the same space as neurons and synapses opens the door to these integrative analyses.</p>
+</li>
+<li>
+<p><strong>Filtering synapse false positives (Automating Proofreading)</strong><br />
+  Knowing where mitochondria sit relative to synapses helps us interpret or even veto suspicious synapse detections (for example, "synapses" that live entirely inside a mitochondrion-shaped blob are probably mistakes; "synapses" that do not have mitochondria nearby are probably not synapses).</p>
+</li>
+</ul>
+<p>In short, mitochondrial segmentation gives us both a <strong>quality control signal</strong> for synapses and neurons, and a rich set of <strong>biological features</strong> for downstream analyses such as cell typing, energy use, and plasticity.</p>
+<h1 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h1>
+<ul>
+<li><a href="https://www.anaconda.com/docs/getting-started/anaconda/install">Conda</a> (for managing the Python environment)</li>
+</ul>
+<h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Clone the git and go to the dev branch.
+  <code>bash
+    git clone https://github.com/Mohinta2892/catena.git
+    cd catena
+    git checkout dev
+    cd mitochondria_segmentation</code></li>
+<li>Create and activate the Conda environment:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="w">  </span>conda<span class="w"> </span>env<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>mito<span class="w"> </span>-f<span class="w"> </span>conda_env/torch_environment.yml
+<span class="w">  </span>conda<span class="w"> </span>activate<span class="w"> </span>mito
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The package has been developed and tested with <code>python=3.8.13</code>. However, it should work on newer versions of <code>python</code> too. 
+The dependencies for <code>monai</code>, <code>torch</code>, <code>torch_metrics</code> and <code>zarr/h5py</code> will need to be adjusted accordingly.</p>
+</div>
+<h1 id="adapt-the-config-within-the-train-and-predict-scripts">Adapt the config within the train and predict scripts<a class="headerlink" href="#adapt-the-config-within-the-train-and-predict-scripts" title="Permanent link">&para;</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The config schemes will change and be ultimately extracted out of the train and the prediction scripts.
+As this is still in dev phase, configs have been kept as it is now for easy debugging.</p>
+</div>
+<h2 id="train-config">Train config<a class="headerlink" href="#train-config" title="Permanent link">&para;</a></h2>
+<p>Please adjust the config params contained within the <code>Args</code> class as follows:
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Args</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exp_name</span> <span class="o">=</span> <span class="s2">&quot;mito_rsunet_from_scratch&quot;</span> <span class="c1"># give your exp a name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">train_zarr_dirs</span> <span class="o">=</span>
+            <span class="p">[</span><span class="s2">&quot;/media/samia/DATA/mounts/fibserver1/smohinta_data/catena_data/HEMI_MITO/data_3d/train&quot;</span><span class="p">]</span> <span class="c1"># you can pass more than 1 dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_zarr_dirs</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s2">&quot;/media/samia/DATA/mounts/fibserver1/smohinta_data/catena_data/HEMI_MITO/data_3d/test&quot;</span><span class="p">]</span>  <span class="c1"># Or provide path for test set if available</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label_type</span> <span class="o">=</span> <span class="s1">&#39;neuron&#39;</span> <span class="c1"># Options: neuron or mito. If neuron, labels expectecd to be saved like `volumes/labels/neuron_ids`, if mito: `volumes/labels/mito_ids`</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">epochs</span> <span class="o">=</span> <span class="mi">100</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># Keep at 1 for now if visualizing, can increase for actual training</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">patch_size</span> <span class="o">=</span> <span class="p">[</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stride</span> <span class="o">=</span> <span class="p">[</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">original_res</span> <span class="o">=</span> <span class="p">[</span><span class="mf">8.0</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target_res</span> <span class="o">=</span> <span class="p">[</span><span class="mf">8.0</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clahe</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subsample_frac</span> <span class="o">=</span> <span class="mf">0.2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subsample_number</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subsample_seed</span> <span class="o">=</span> <span class="mi">27</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">balance_patches</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># Crucial for balancing</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min_positive_pixels</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1"># Adjust based on your data visualization</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.002</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate_after_hotstart_50</span> <span class="o">=</span> <span class="mf">0.002</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loss_type</span> <span class="o">=</span> <span class="s1">&#39;DiceCE&#39;</span> <span class="c1"># Options  DiceLoss / DiceCE (DiceCE is known to perform better)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loss_weights</span> <span class="o">=</span> <span class="mf">5.0</span>  <span class="c1"># Tune this based on pixel imbalance</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rotation_augs</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">contrast_augs</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_loc</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># No pretrained model for training from scratch</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">freeze_encoder</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hotstart</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_images</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># Set to True to save predicted images</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eval_interval</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># Validation intervals</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ckpt_interval</span> <span class="o">=</span> <span class="mi">25</span> <span class="c1"># Model Checkpoint intervals</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_workers</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Start with 0 for debugging in Jupyter. Increase for performance.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resume_checkpoint</span> <span class="o">=</span> <span class="s2">&quot;/media/samia/DATA/PhD/codebases/MitoEM/mito_rsunet_from_scratch/checkpoint_epoch_1.pth&quot;</span>  <span class="c1"># Path to a checkpoint file to resume training from or None</span>
+</code></pre></div></p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>All raw EM data is expected to be under "volumes/raw"
+Labels are expected under "volumes/labels/neuron_ids" for neuron and "volumes/labels/mito_ids" for mito. However, if you have mitos saved under "volumes/labels/neuron_ids", set <code>self.label_type = 'neuron'</code>.</p>
+</div>
+<h2 id="predict-config">Predict config<a class="headerlink" href="#predict-config" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>class<span class="w"> </span>InferenceArgs:
+<span class="w">    </span>def<span class="w"> </span>__init__<span class="o">(</span>self<span class="o">)</span>:
+<span class="w">        </span><span class="c1"># Path to the trained model weights (.pth file)</span>
+<span class="w">        </span>self.model_path<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;/media/samia/DATA/PhD/codebases/MitoEM/mito_rsunet_from_scratch/best_model_IoU0.8577.pth&quot;</span><span class="w">  </span><span class="c1"># &lt;--- IMPORTANT: Update this path!</span>
+
+<span class="w">        </span><span class="c1"># Directory containing test Zarr files (can be multiple)</span>
+<span class="w">        </span>self.test_zarr_dirs<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span>
+<span class="w">            </span><span class="s2">&quot;/media/samia/DATA/mounts/fibserver1/smohinta_data/catena_data/HEMI_MITO/data_3d/test/&quot;</span><span class="o">]</span><span class="w">  </span><span class="c1"># &lt;--- IMPORTANT: Update this path!</span>
+<span class="w">        </span>self.label_type<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;neuron&#39;</span><span class="w">  </span><span class="c1"># The type of label the model was trained for</span>
+
+<span class="w">        </span><span class="c1"># Model and Dataset parameters (must match training)</span>
+<span class="w">        </span>self.patch_size<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="m">128</span>,<span class="w"> </span><span class="m">128</span>,<span class="w"> </span><span class="m">128</span><span class="o">]</span><span class="w">  </span><span class="c1"># Z Y X</span>
+<span class="w">        </span>self.stride<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="m">64</span>,<span class="w"> </span><span class="m">64</span>,<span class="w"> </span><span class="m">64</span><span class="o">]</span><span class="w">  </span><span class="c1"># Z Y X (for inference tiling)</span>
+<span class="w">        </span>self.original_res<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="m">8</span>.0,<span class="w"> </span><span class="m">8</span>.0,<span class="w"> </span><span class="m">8</span>.0<span class="o">]</span>
+<span class="w">        </span>self.target_res<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="m">8</span>.0,<span class="w"> </span><span class="m">8</span>.0,<span class="w"> </span><span class="m">8</span>.0<span class="o">]</span><span class="w">  </span><span class="c1"># Prediction will be at this resolution</span>
+<span class="w">        </span>self.clahe<span class="w"> </span><span class="o">=</span><span class="w"> </span>False<span class="w">  </span><span class="c1"># Must match training preprocessing</span>
+<span class="w">        </span>self.batch_size<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="w">  </span><span class="c1"># Keep at 1 for simplicity in merging, or handle batch merging logic</span>
+<span class="w">        </span>self.num_workers<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="w">  </span><span class="c1"># Use 0 for debugging, can increase for speed</span>
+
+<span class="w">        </span><span class="c1"># Output settings</span>
+<span class="w">        </span>self.output_dir<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;inference_results_rsunet&quot;</span>
+<span class="w">        </span>self.output_filename<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;merged_predictions_hemi&quot;</span><span class="w">  </span><span class="c1"># output filename, an extension will be automatically added based on if you choose tiff or zarr</span>
+<span class="w">        </span>self.output_format<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;tiff&quot;</span><span class="w">  </span><span class="c1"># &quot;zarr&quot; or &quot;tiff&quot;</span>
+<span class="w">        </span>self.model_type<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;rs_unet&quot;</span><span class="w">  </span><span class="c1"># &quot;rs_unet&quot; or &quot;monai_unet&quot;</span>
+</code></pre></div>
+<blockquote>
+<p>[!Important]
+During inference set the path to the correct checkpoint and the directory which contains the zarr files.
+All raw EM data is expected to be under "volumes/raw". </p>
+</blockquote>
+<h1 id="train-models">Train Models<a class="headerlink" href="#train-models" title="Permanent link">&para;</a></h1>
+<ul>
+<li>
+<p>For training the Monai UNet after adjusting the config as above, please run:
+<div class="highlight"><pre><span></span><code><span class="w">  </span>python<span class="w"> </span>monai_unet_train.py
+</code></pre></div></p>
+</li>
+<li>
+<p>For training the Monai UNet after adjusting the config as above, please run:
+  <div class="highlight"><pre><span></span><code><span class="w">  </span>python<span class="w"> </span>rsunet_train.py
+</code></pre></div></p>
+</li>
+</ul>
+<p>The training phase saves model checkpoints at intervals set with <code>self.ckpt_interval</code> and also for <strong>best</strong> <code>IOU</code> achieved during validation.</p>
+<p>The training script also saved the losses and metrics as .npy files and should also log it to <code>tensorboard</code> under <code>runs_{datetime}</code> folder.</p>
+<h1 id="infer-with-trained-models">Infer with trained models<a class="headerlink" href="#infer-with-trained-models" title="Permanent link">&para;</a></h1>
+<ul>
+<li>For inferring with the Monai Unet after adjusting the config as above, please run:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="w">  </span>python<span class="w"> </span>predict.py
+</code></pre></div>
+<p><code>Predict</code> will save a tiff or zarr with <strong>semantic</strong> segmentation in your set <code>self.output_dir</code>.</p>
+<p>If you only need semantic segmentation of mitochondria, you can use the saved segmentation.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>We have only tested inference on relatively small datasets (not whole brains). However, the code has been developed to handle large datasets chunk by chunk. Chunk-size needs to be specified by the user.
+We will report further details once we have managed to run very large EM datasets.</p>
+</div>
+<h1 id="instance-segmentation-of-mitochondria-masks">Instance Segmentation of mitochondria masks<a class="headerlink" href="#instance-segmentation-of-mitochondria-masks" title="Permanent link">&para;</a></h1>
+<p>At this stage we run connected components over the binary semantic masks naively.</p>
+<ul>
+<li>
+<p>To run instance segmentation, first edit the config below contained with <a href="https://github.com/Mohinta2892/catena/blob/dev/mitochondria_segmentation/instance_segmenter.py">instance_segmenter.py</a>.
+<div class="highlight"><pre><span></span><code>class<span class="w"> </span>ConversionArgs:
+<span class="w">    </span>def<span class="w"> </span>__init__<span class="o">(</span>self<span class="o">)</span>:
+<span class="w">        </span><span class="c1"># Path to your saved semantic prediction file (from inference script)</span>
+<span class="w">        </span>self.input_prediction_path<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;/media/samia/DATA/PhD/codebases/MitoEM/inference_results/merged_predictions_hemi_test.tif&quot;</span><span class="w">  </span><span class="c1"># &lt;--- UPDATE THIS</span>
+
+<span class="w">        </span>self.output_instance_dir<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;instance_results&quot;</span>
+<span class="w">        </span>self.output_format<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;tiff&quot;</span><span class="w">  </span><span class="c1"># &quot;zarr&quot; or &quot;tiff&quot;</span>
+
+<span class="w">        </span><span class="c1"># Parameters for chunking</span>
+<span class="w">        </span>self.chunk_size<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span><span class="m">128</span>,<span class="w"> </span><span class="m">128</span>,<span class="w"> </span><span class="m">128</span><span class="o">)</span><span class="w">  </span><span class="c1"># Size of chunks to process</span>
+<span class="w">        </span>self.overlap<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span><span class="m">16</span>,<span class="w"> </span><span class="m">16</span>,<span class="w"> </span><span class="m">16</span><span class="o">)</span><span class="w">  </span><span class="c1"># Overlap between chunks (must be even for simple overlap)</span>
+
+<span class="w">        </span><span class="c1"># Parameters for instance segmentation method (binary_connected)</span>
+<span class="w">        </span>self.thres_foreground<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.5<span class="w">  </span><span class="c1"># Threshold for binarizing semantic prediction (0-1)</span>
+<span class="w">        </span>self.thres_small_instances<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">128</span><span class="w">  </span><span class="c1"># Size threshold for removing small objects (pixels)</span>
+<span class="w">        </span>self.scale_factors<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span><span class="m">1</span>.0,<span class="w"> </span><span class="m">1</span>.0,<span class="w"> </span><span class="m">1</span>.0<span class="o">)</span><span class="w">  </span><span class="c1"># Keep at 1.0 for no resizing</span>
+<span class="w">        </span>self.remove_small_mode<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;background&#39;</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>Run the instance segmentation.
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>instance_segmenter.py
+</code></pre></div></p>
+</li>
 </ul>
 
 

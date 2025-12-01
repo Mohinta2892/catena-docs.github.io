@@ -1384,7 +1384,7 @@
 <li><strong>Design Choices:</strong> See <a href="design-choices/">Design Choices</a> for the "why" behind the "what".</li>
 </ul>
 <p>For a primer to "What synapse detection is?", check <a href="index-synapse-detection/">here.</a></p>
-<h1 id="synful-pytorch-and-tensorflow-usage">Synful PyTorch and TensorFlow Usage<a class="headerlink" href="#synful-pytorch-and-tensorflow-usage" title="Permanent link">&para;</a></h1>
+<h1 id="what-is-synful">What is Synful?<a class="headerlink" href="#what-is-synful" title="Permanent link">&para;</a></h1>
 <p>Synful implements the partner-detection approach from Julia Buhmann et al.’s paper, <code>Automatic detection of synaptic partners in a whole-brain Drosophila electron microscopy dataset</code>. It uses a U-Net–style encoder–decoder to jointly (1) localize post-synaptic sites (potentially annotations are on top of PSDs) and (2) predict a direction vector field from each post-synaptic site toward its pre-synaptic partner. This multi-task setup lets the network learn where synapses are and who they connect to—within a single model.</p>
 <ul>
 <li>Read the paper here: <a href="https://tinyurl.com/ywahwmwj">Buhmann et al., Nature Methods, 2021</a></li>
@@ -1398,7 +1398,7 @@
 </div>
 
 <p>We have refactored Synful's TensorFlow code and re-implemented it in PyTorch for more flexibility on newer CUDA machines and for eager execution of model operators while training.</p>
-<h2 id="tensorflow">TensorFlow<a class="headerlink" href="#tensorflow" title="Permanent link">&para;</a></h2>
+<h2 id="synful-tensorflow-implementation">Synful: TensorFlow Implementation<a class="headerlink" href="#synful-tensorflow-implementation" title="Permanent link">&para;</a></h2>
 <p>TensorFlow scripts are subdivided into running only inference with Buhmann et. al's pretrained networks, which were released <a href="https://github.com/funkelab/synful">here</a> and also training Synful models in <code>TensorFlow from Scratch</code> on your own datasets.</p>
 <ul>
 <li>Please go <a href="https://github.com/Mohinta2892/catena/tree/dev/synapse_detection/synful/tensorflow/pretrained/train">here</a> to run inference with <code>pretrained</code> models on your anisotropic datasets.</li>
@@ -1417,7 +1417,7 @@ We will reveal our findings soon!</p>
 <p>Input is expected in <code>.hdf</code> in the <a href="https://cremi.org/data/">CREMI</a> format. If you do not know how to convert to CREMI format, please follow the <a href="https://github.com/Mohinta2892/catena/blob/dev/synapse_detection/synful/pytorch/data_utils/download_data/meta_analysis/scripts/convert_wasp_to_CREMI.py">example script</a>. 
 Synful can run with and without neuron segmentation.</p>
 </div>
-<h2 id="pytorch">PyTorch<a class="headerlink" href="#pytorch" title="Permanent link">&para;</a></h2>
+<h2 id="synful-pytorch-implementation">Synful: PyTorch Implementation<a class="headerlink" href="#synful-pytorch-implementation" title="Permanent link">&para;</a></h2>
 <p>The pytorch re-implementation can be found <a href="https://github.com/Mohinta2892/catena/tree/dev/synapse_detection/synful/pytorch">here</a>.</p>
 <p><strong>Please note that this sub-folder is under active development.</strong></p>
 <p>Currently we are testing the reimplemented models on both isotropic FIBSEM and anisotropic TEM datasets. This requires some time because <em>we value reproducibility of code and performance equally</em>.</p>

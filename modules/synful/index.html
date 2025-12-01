@@ -11,7 +11,7 @@
       
       
       
-        <link rel="prev" href="../local-shape-descriptors/design-choices/">
+        <link rel="prev" href="index-synapse-detection/">
       
       
         <link rel="next" href="design-choices/">
@@ -622,6 +622,34 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="index-synapse-detection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -635,10 +663,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3_1" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3_2" checked>
         
           
-          <label class="md-nav__link" for="__nav_4_3_1" id="__nav_4_3_1_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_3_2" id="__nav_4_3_2_label" tabindex="0">
             
   
   
@@ -656,8 +684,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_3_1_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_4_3_1">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_3_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_3_2">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -683,24 +711,6 @@
         
       
       
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Overview
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -717,36 +727,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#what-is-synapse-detection" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        What is synapse detection?
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
       
     </li>
   
@@ -804,10 +784,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3_3" >
         
           
-          <label class="md-nav__link" for="__nav_4_3_2" id="__nav_4_3_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_3_3" id="__nav_4_3_3_label" tabindex="0">
             
   
   
@@ -825,8 +805,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_3_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4_3_2">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3_3">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1379,25 +1359,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#what-is-synapse-detection" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        What is synapse detection?
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -1422,8 +1383,45 @@
 <li><strong>Install &amp; Usage:</strong> See the module's README and scripts in GitHub to get more up-to-date information.</li>
 <li><strong>Design Choices:</strong> See <a href="design-choices/">Design Choices</a> for the "why" behind the "what".</li>
 </ul>
-<h2 id="what-is-synapse-detection">What is synapse detection?<a class="headerlink" href="#what-is-synapse-detection" title="Permanent link">&para;</a></h2>
-<p>In connectome mapping, tracing out every neuron is not enough. We must know who are these neurons talking to, i.e. which other neurons.</p>
+<p>For a primer to "What synapse detection is?", check <a href="index-synapse-detection/">here.</a></p>
+<h1 id="synful-pytorch-and-tensorflow-usage">Synful PyTorch and TensorFlow Usage<a class="headerlink" href="#synful-pytorch-and-tensorflow-usage" title="Permanent link">&para;</a></h1>
+<p>Synful implements the partner-detection approach from Julia Buhmann et al.’s paper, <code>Automatic detection of synaptic partners in a whole-brain Drosophila electron microscopy dataset</code>. It uses a U-Net–style encoder–decoder to jointly (1) localize post-synaptic sites (potentially annotations are on top of PSDs) and (2) predict a direction vector field from each post-synaptic site toward its pre-synaptic partner. This multi-task setup lets the network learn where synapses are and who they connect to—within a single model.</p>
+<ul>
+<li>Read the paper here: <a href="https://tinyurl.com/ywahwmwj">Buhmann et al., Nature Methods, 2021</a></li>
+</ul>
+<h3 id="synfuls-architecture-at-a-glance-multi-task-unet">Synful's Architecture at a glance (multi-task UNet)<a class="headerlink" href="#synfuls-architecture-at-a-glance-multi-task-unet" title="Permanent link">&para;</a></h3>
+<p><br></p>
+<div>
+<p align="center">
+<img src='https://github.com/Mohinta2892/catena/blob/dev/synapse_detection/synful/assets/sup_fig_synful-1.png' align="center" width=800px>
+</p>
+</div>
+
+<p>We have refactored Synful's TensorFlow code and re-implemented it in PyTorch for more flexibility on newer CUDA machines and for eager execution of model operators while training.</p>
+<h2 id="tensorflow">TensorFlow<a class="headerlink" href="#tensorflow" title="Permanent link">&para;</a></h2>
+<p>TensorFlow scripts are subdivided into running only inference with Buhmann et. al's pretrained networks, which were released <a href="https://github.com/funkelab/synful">here</a> and also training Synful models in <code>TensorFlow from Scratch</code> on your own datasets.</p>
+<ul>
+<li>Please go <a href="https://github.com/Mohinta2892/catena/tree/dev/synapse_detection/synful/tensorflow/pretrained/train">here</a> to run inference with <code>pretrained</code> models on your anisotropic datasets.</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>You can infer on <code>isotropic</code> datasets with these models, but beware that they are quite sensitive to the resolution and quality of the EM.
+Even with test data with matching resolutions with CREMI, the models may not be as accurate as expected.
+We will reveal our findings soon!</p>
+</div>
+<ul>
+<li>Please go <a href="https://github.com/Mohinta2892/catena/tree/dev/synapse_detection/synful/tensorflow/train_from_scratch">here</a> to train the models in from scratch on your own datasets.</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Input is expected in <code>.hdf</code> in the <a href="https://cremi.org/data/">CREMI</a> format. If you do not know how to convert to CREMI format, please follow the <a href="https://github.com/Mohinta2892/catena/blob/dev/synapse_detection/synful/pytorch/data_utils/download_data/meta_analysis/scripts/convert_wasp_to_CREMI.py">example script</a>. 
+Synful can run with and without neuron segmentation.</p>
+</div>
+<h2 id="pytorch">PyTorch<a class="headerlink" href="#pytorch" title="Permanent link">&para;</a></h2>
+<p>The pytorch re-implementation can be found <a href="https://github.com/Mohinta2892/catena/tree/dev/synapse_detection/synful/pytorch">here</a>.</p>
+<p><strong>Please note that this sub-folder is under active development.</strong></p>
+<p>Currently we are testing the reimplemented models on both isotropic FIBSEM and anisotropic TEM datasets.
+We will soon release complete usage instructions.</p>
 
 
 

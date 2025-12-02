@@ -711,6 +711,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -727,6 +745,75 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-synful" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is Synful?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What is Synful?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#synfuls-architecture-at-a-glance-multi-task-unet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Synful's Architecture at a glance (multi-task UNet)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#synful-tensorflow-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Synful: TensorFlow Implementation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#synful-pytorch-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Synful: PyTorch Implementation
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1359,6 +1446,64 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-synful" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is Synful?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What is Synful?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#synfuls-architecture-at-a-glance-multi-task-unet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Synful's Architecture at a glance (multi-task UNet)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#synful-tensorflow-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Synful: TensorFlow Implementation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#synful-pytorch-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Synful: PyTorch Implementation
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1384,7 +1529,7 @@
 <li><strong>Design Choices:</strong> See <a href="design-choices/">Design Choices</a> for the "why" behind the "what".</li>
 </ul>
 <p>For a primer to "What synapse detection is?", check <a href="index-synapse-detection/">here.</a></p>
-<h1 id="what-is-synful">What is Synful?<a class="headerlink" href="#what-is-synful" title="Permanent link">&para;</a></h1>
+<h2 id="what-is-synful">What is Synful?<a class="headerlink" href="#what-is-synful" title="Permanent link">&para;</a></h2>
 <p>Synful implements the partner-detection approach from Julia Buhmann et al.’s paper, <code>Automatic detection of synaptic partners in a whole-brain Drosophila electron microscopy dataset</code>. It uses a U-Net–style encoder–decoder to jointly (1) localize post-synaptic sites (potentially annotations are on top of PSDs) and (2) predict a direction vector field from each post-synaptic site toward its pre-synaptic partner. This multi-task setup lets the network learn where synapses are and who they connect to—within a single model.</p>
 <ul>
 <li>Read the paper here: <a href="https://tinyurl.com/ywahwmwj">Buhmann et al., Nature Methods, 2021</a></li>

@@ -883,6 +883,28 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#getting-started" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Getting Started
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#citing-simpsyn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Citing SIMPSYN
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1424,6 +1446,28 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#getting-started" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Getting Started
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#citing-simpsyn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Citing SIMPSYN
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1456,12 +1500,12 @@
 <p>With SimpSyn we rethink the synapse detection problem as a segmentation task, where both pre and post sites are segmented as masks and are post-processed into partners via nearest neighbour assignments. <em>This deviates from Synful's joint learning of a mask segmentation and regression tasks, thereby being computationally efficient.</em></p>
 <p>SimpSyn uses a 3D Residual U-Net for synapse detection that predicts two output channels: one corresponding to pre-synaptic regions and the other to post-synaptic regions. To achieve this, a spherical 3D region is generated and centered at the coordinates of the pre-synaptic and post-synaptic points. These output masks are subsequently processed using connected component labelling to isolate individual synaptic structures. To establish correspondence between pre-synaptic and post-synaptic sites, each post-synaptic component is paired with its nearest pre-synaptic counterpart based on the nearest neighbour criterion.</p>
 <p><img width="1031" height="550" alt="image" src="https://github.com/user-attachments/assets/68b965c0-0dc0-43c4-a638-7f7d57e60b31" /></p>
-<h1 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h1>
+<h2 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h2>
 <p><strong>SIMPSYN is built within Biapy</strong>.
 Please follow the <a href="https://biapy.readthedocs.io/en/latest/get_started/installation.html">installation instructions here</a>.</p>
 <p><code>Kindly note SimpSyn is currently being tested on various other datasets as our paper is under review.</code></p>
 <p>Complete documentation will be released soon.</p>
-<h1 id="citing-simpsyn">Citing SIMPSYN<a class="headerlink" href="#citing-simpsyn" title="Permanent link">&para;</a></h1>
+<h2 id="citing-simpsyn">Citing SIMPSYN<a class="headerlink" href="#citing-simpsyn" title="Permanent link">&para;</a></h2>
 <p>Please cite our <a href="https://arxiv.org/html/2509.17041v1">preprint on Towards Generalized Synapse Detection Across Invertebrate Species</a>.</p>
 
 

@@ -1726,6 +1726,13 @@
 <p>This re-implementation will slightly deviate from the original one as it will include multiple architectures besides the VGG.
 It will continue to use <code>Gunpowder</code> and <code>Daisy</code> for data loading and task scheduling.</p>
 </div>
+<figure>
+<p><img alt="Synapse classification" src="../../assets/synister-resnet.png" width="800" />
+  </p>
+<figcaption>
+  <strong>Figure 1. Schematic of the modified lightweight 3D ResNet-18 architecture for neurotransmitter classification.</strong> The network accepts a 3D input volume (e.g., presynaptic sites) and processes it through an initial 3 x 3 x 3 convolution layer. This is followed by four residual stages, each containing two residual blocks. Feature map dimensions are downsampled by a stride of 2 at the beginning of each stage, while channel width progressively increases from 12 to 96. Skip connections (curved arrows) allow gradient flow across blocks. Global average pooling is applied prior to a fully connected layer used for final classification.
+  </figcaption>
+</figure>
 <h2 id="directory-structure">Directory Structure<a class="headerlink" href="#directory-structure" title="Permanent link">&para;</a></h2>
 <p>The project is organized as follows:</p>
 <div class="highlight"><pre><span></span><code>.

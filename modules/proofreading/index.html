@@ -1261,6 +1261,34 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#why-do-we-proofread-segmentations_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why do we proofread segmentations?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Why do we proofread segmentations?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#catmaid-based-proofreading-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CATMAID-based proofreading workflow
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1500,6 +1528,34 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#why-do-we-proofread-segmentations_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why do we proofread segmentations?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Why do we proofread segmentations?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#catmaid-based-proofreading-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CATMAID-based proofreading workflow
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1547,11 +1603,79 @@
 </ul>
 <p>Instead of treating proofreading as a painful afterthought, we treat it as a key part of the loop that <strong>accelerates ground-truth generation</strong> and steadily improves the entire pipeline. <em>We believe good ground-truth leads to more useful models.</em></p>
 <h3 id="proofreading-sub-cubes-locally-with-seg2link">Proofreading Sub-cubes locally with Seg2link<a class="headerlink" href="#proofreading-sub-cubes-locally-with-seg2link" title="Permanent link">&para;</a></h3>
-<p>to do</p>
+<p><a href="https://www.nature.com/articles/s41598-023-34232-6">Seg2Link</a> was designed to support semi-automatic cell segmentation and comes with two main workflows:<br />
+a) segmentation, and<br />
+b) proofreading in 3D.</p>
+<p>We mainly leverage the <strong>proofreading</strong> workflow. Seg2Link is built on <strong>napari</strong>, which makes it very convenient to:</p>
+<ul>
+<li>inspect 3D segmentations,</li>
+<li>correct <strong>split</strong> and <strong>merge</strong> errors,</li>
+<li>and even directly paint in <strong>false negative</strong> regions if needed.</li>
+</ul>
+<p>This makes it ideal for proofreading <strong>sub-cubes</strong> locally, for example, when you want to clean up a small region to use as ground-truth for retraining.</p>
+<p>Seg2Link expects <strong>TIFF</strong> volumes as input, so we provide additional scripts to convert our Zarr-based outputs into TIFF stacks.</p>
+<p>You can find these scripts here:</p>
+<ul>
+<li><a href="https://github.com/Mohinta2892/Seg2Link">https://github.com/Mohinta2892/Seg2Link</a></li>
+</ul>
 <h3 id="proofreading-whole-brain-segmentations-in-cave">Proofreading whole-brain segmentations in CAVE<a class="headerlink" href="#proofreading-whole-brain-segmentations-in-cave" title="Permanent link">&para;</a></h3>
-<p>to do</p>
+<p>We also use <a href="https://www.nature.com/articles/s41592-024-02426-z">CAVE</a> (better known to many as <em>FlyWire</em>) to proofread large, ingested segmentations.</p>
+<p>CAVE acts as a <strong>version control system for segmentations</strong>: it keeps track of all edits to the segmentation graph as users <strong>merge</strong> or <strong>split</strong> neuron instances during proofreading. Every change is recorded, so we can always see what was corrected, by whom, and when.</p>
+<p>CAVE comes with a rich ecosystem of tools and APIs, documented here:</p>
+<ul>
+<li><a href="https://github.com/CAVEconnectome">https://github.com/CAVEconnectome</a></li>
+</ul>
+<p>In Catena, we ingest most of our large volumes into CAVE and then:</p>
+<ul>
+<li>proofread neuron trajectories either <strong>densely</strong> in specific regions or <strong>sparsely but completely</strong> across the brain,  </li>
+<li>export the corrected segmentations, and  </li>
+<li>use these improved labels to <strong>retrain or fine-tune</strong> our models.</li>
+</ul>
+<p>Our current export scripts can be found here:</p>
+<ul>
+<li><a href="https://github.com/Mohinta2892/catena/tree/dev/proofreading">https://github.com/Mohinta2892/catena/tree/dev/proofreading</a></li>
+</ul>
 <h3 id="automatic-proofreading-with-catmaid-skeletons">Automatic Proofreading with CATMAID Skeletons<a class="headerlink" href="#automatic-proofreading-with-catmaid-skeletons" title="Permanent link">&para;</a></h3>
-<p>to do</p>
+<p>Tracing neurons has been the standard way to reconstruct their trajectories for a long time, and <strong>CATMAID</strong> has been the tool of choice for doing this at scale. Once these skeletons exist, they are not just useful for morphology, they can also be <strong>reused to proofread automatic segmentations</strong>.</p>
+<p>In Catena, we explore using CATMAID skeletons to <strong>automatically merge</strong> neuron segments produced by either:</p>
+<ul>
+<li>bottom-up, affinity-based approaches, or  </li>
+<li>top-down methods.</li>
+</ul>
+<p>The basic idea is simple: if a single skeleton runs through multiple segmented fragments, those fragments probably belong to the <strong>same neuron</strong> and should be merged.</p>
+<p>One practical caveat is that skeleton node placement is not always very dense. To fit B-splines (or other smooth curves) that more faithfully follow the true neuron trajectory, we sometimes need to <strong>resample skeleton points</strong> at a higher frequency before using them for proofreading.</p>
+<p>We experimented a bit with this idea; an initial script and some preliminary results can be found here:</p>
+<ul>
+<li><a href="https://github.com/Mohinta2892/catena/blob/dev/proofreading/auto_merge_seg_w_tracings.py">Automatic merging of segments using tracings</a></li>
+</ul>
+<p>At the moment, we do not yet have a large number of <strong>fully proofread, complete skeletons</strong> to exploit, so this line of work is still exploratory. As more high-quality tracings become available, we expect this approach to become a much more powerful automatic proofreading tool (at least to recover fragmented neuronal backbones).</p>
+<h2 id="why-do-we-proofread-segmentations_1">Why do we proofread segmentations?<a class="headerlink" href="#why-do-we-proofread-segmentations_1" title="Permanent link">&para;</a></h2>
+<p>As with neuron and mitochondria segmentation, <strong>machine predictions for synapses are never 100% accurate</strong>. We still need ways to check and verify them, usually with a human in the loop.</p>
+<p>Synapses are especially critical because they <strong>define the connectivity</strong> between neurons and are often the readout we care about when comparing brains across learning conditions, developmental stages, or disease models. Missed synapses or spurious synapses can directly distort the inferred circuit.</p>
+<p>Automatic methods such as <code>Synful</code> or <code>SimpSyn</code> can:</p>
+<ul>
+<li><strong>miss</strong> true synaptic sites (false negatives), or  </li>
+<li>propose <strong>too many</strong> candidates (false positives).</li>
+</ul>
+<p>Both kinds of errors need to be proofread.</p>
+<h3 id="catmaid-based-proofreading-workflow">CATMAID-based proofreading workflow<a class="headerlink" href="#catmaid-based-proofreading-workflow" title="Permanent link">&para;</a></h3>
+<p>For synapses, we use <strong>CATMAID</strong> as our proofreading environment:</p>
+<ol>
+<li>Synapse predictions from <code>Synful</code> or <code>SimpSyn</code> are <strong>exported and pushed into CATMAID</strong> as candidate sites.
+See our example script <a href="https://github.com/shiyanlee/synapse_CATMAID/tree/push_synapses">here</a>.</li>
+<li>Using CATMAID's native tools, proofreaders inspect each candidate in the EM volume.</li>
+<li>Synapses are then tagged with labels such as:</li>
+<li><code>correct synapse</code></li>
+<li><code>incorrect synapse</code></li>
+<li><code>uncertain</code></li>
+</ol>
+<p>These tags allow us to:</p>
+<ul>
+<li>clean up synapse lists for downstream connectivity analysis,  </li>
+<li>build curated validation sets, and  </li>
+<li>feed corrections back into the training loop for future models.</li>
+</ul>
+<p>See our preprint on proofreading synapses - <a href="https://www.biorxiv.org/content/10.1101/2025.09.26.678851v1">Beyond Agreement: Standardizing Crowdsourced Synapse Annotations through Proofreading in EM Connectomics</a></p>
 
 
 

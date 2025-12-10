@@ -1867,32 +1867,40 @@
 <h3 id="1-use-empanada-mitonet-directly-at-inference">1. Use Empanada / MitoNet directly at inference<a class="headerlink" href="#1-use-empanada-mitonet-directly-at-inference" title="Permanent link">&para;</a></h3>
 <p><strong>Option:</strong> rely entirely on fine-tuned MitoNet via Empanada for both training and inference.</p>
 <ul>
-<li><strong>Pros</strong></li>
-<li>Reuses a well-tested panoptic segmentation model.</li>
 <li>
-<p>Minimal extra modelling work in Catena.</p>
+<p><strong>Pros</strong></p>
+<ul>
+<li>Reuses a well-tested panoptic segmentation model.</li>
+<li>Minimal extra modelling work in Catena.</li>
+</ul>
 </li>
 <li>
 <p><strong>Cons</strong></p>
-</li>
+<ul>
 <li>Ties inference tightly to the Empanada stack. Also, Empanada only exposed MitoNet within <code>napari</code>, which is not suitable run segmentations on large datasets.</li>
 <li>Less flexibility to experiment with architectures or training schemes.</li>
 <li>Harder to integrate with Catena's generalised Zarr-based, patch-wise training/inference pattern.</li>
+</ul>
+</li>
 </ul>
 <p>We still use Empanada/MitoNet for <strong>ground-truth generation</strong>, but not as Catena's main inference engine. </p>
 <h3 id="2-single-best-model-vs-multiple-architectures">2. Single "best" model vs multiple architectures<a class="headerlink" href="#2-single-best-model-vs-multiple-architectures" title="Permanent link">&para;</a></h3>
 <p><strong>Option:</strong> pick one model (e.g. a single 3D U-Net) and optimise only that.</p>
 <ul>
-<li><strong>Pros</strong></li>
-<li>Simpler codebase.</li>
 <li>
-<p>Less configuration branching.</p>
+<p><strong>Pros</strong></p>
+<ul>
+<li>Simpler codebase.</li>
+<li>Less configuration branching.</li>
+</ul>
 </li>
 <li>
 <p><strong>Cons</strong></p>
-</li>
+<ul>
 <li>Harder to compare architectures on the same data and pipeline.</li>
 <li>Less flexibility when data or requirements change.</li>
+</ul>
+</li>
 </ul>
 <p>Instead, we support <strong>two architectures</strong> side by side:</p>
 <ol>
@@ -1903,17 +1911,21 @@
 <h3 id="3-semantic-connected-components-vs-full-panoptic-model">3. Semantic + connected components vs full panoptic model<a class="headerlink" href="#3-semantic-connected-components-vs-full-panoptic-model" title="Permanent link">&para;</a></h3>
 <p><strong>Option:</strong> train a full panoptic instance segmentation model (e.g. directly at MitoNet's level of complexity).</p>
 <ul>
-<li><strong>Pros</strong></li>
-<li>Instances are explicit; no need for post-hoc connected components.</li>
 <li>
-<p>Closer to Empanada's internal model.</p>
+<p><strong>Pros</strong></p>
+<ul>
+<li>Instances are explicit; no need for post-hoc connected components.</li>
+<li>Closer to Empanada's internal model.</li>
+</ul>
 </li>
 <li>
 <p><strong>Cons</strong></p>
-</li>
+<ul>
 <li>More complex models and training pipelines.</li>
 <li>Heavier to run and tune for new datasets.</li>
 <li>Harder to integrate with generic segmentation tools in Catena.</li>
+</ul>
+</li>
 </ul>
 <p>We instead adopt a <strong>semantic-first</strong> approach (because sometimes only a semantic mask is the requirement) and do instance segmentation via <strong>connected components</strong>:</p>
 <ul>
@@ -1953,81 +1965,93 @@
 We can adapt this framework to explore affinity-based methods for mitochondria segmentation (we actually can use LSDs for joint neuron + mitochondria) predictions and also explore contemporary graph-cut methods for better instance segmentation results.</p>
 <h2 id="trade-offs">Trade-offs<a class="headerlink" href="#trade-offs" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Model complexity vs ease of use</strong></li>
-<li>MONAI U-Net is simple and easy to understand (super-easy to use); RS-UNet is more expressive but slightly more complex.</li>
 <li>
-<p>Supporting both adds a bit of code complexity but gives users flexibility.</p>
+<p><strong>Model complexity vs ease of use</strong></p>
+<ul>
+<li>MONAI U-Net is simple and easy to understand (super-easy to use); RS-UNet is more expressive but slightly more complex.</li>
+<li>Supporting both adds a bit of code complexity but gives users flexibility.</li>
+</ul>
 </li>
 <li>
 <p><strong>Panoptic vs semantic -&gt; instances</strong></p>
-</li>
+<ul>
 <li>Using Empanada only for GT and not for inference means we duplicate some functionality, but we gain a unified Catena-style training/inference story.</li>
-<li>
-<p>Doing instances via connected components is naive compared to full panoptic models, but it is explicit, tunable, and easy to inspect.</p>
+<li>Doing instances via connected components is naive compared to full panoptic models, but it is explicit, tunable, and easy to inspect.</li>
+</ul>
 </li>
 <li>
 <p><strong>Patch-wise processing vs full-volume</strong></p>
-</li>
-<li>
-<p>Patch-based training/inference is necessary for memory reasons, but it introduces tiling and overlap hyperparameters that need to be set carefully.</p>
+<ul>
+<li>Patch-based training/inference is necessary for memory reasons, but it introduces tiling and overlap hyperparameters that need to be set carefully.</li>
+</ul>
 </li>
 <li>
 <p><strong>Format conventions</strong></p>
-</li>
+<ul>
 <li>Insisting on <code>volumes/raw</code> and <code>volumes/labels/...</code> plus Zarr structure may require users to convert/import their data, but it standardises everything downstream.</li>
+</ul>
+</li>
 </ul>
 <h2 id="implementation-notes">Implementation Notes<a class="headerlink" href="#implementation-notes" title="Permanent link">&para;</a></h2>
 <h3 id="training-configuration">Training configuration<a class="headerlink" href="#training-configuration" title="Permanent link">&para;</a></h3>
 <p>Training is driven by an <code>Args</code> class (see <code>monai_unet_train.py</code> / <code>rsunet_train.py</code>), with key fields such as:</p>
 <ul>
-<li><strong>Experiment &amp; data:</strong></li>
+<li><strong>Experiment &amp; data:</strong><ul>
 <li><code>exp_name</code>: experiment identifier (used for checkpoints, logs).  </li>
-<li><code>train_zarr_dirs</code>, <code>test_zarr_dirs</code>: one or more Zarr directories for train/test.  </li>
+<li><code>train_zarr_dirs</code>, <code>test_zarr_dirs</code>: one or more Zarr directories for train/test.  <ul>
 <li><code>label_type</code>: <code>'neuron'</code> or <code>'mito'</code>, which determines which label dataset to read (<code>volumes/labels/neuron_ids</code> vs <code>volumes/labels/mito_ids</code>). </li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Akin to Xie et al., we have this to verify if a model trained on neuron segmentations, yields better results when fine-tuned on mitochondria segmentation, even when the mitochondrial datasets are limited. </p>
 </div>
 <ul>
-<li><strong>Training schedule:</strong></li>
+<li>
+<p><strong>Training schedule:</strong></p>
+<ul>
 <li><code>epochs</code>: max training epochs.  </li>
 <li><code>batch_size</code>: patch batch size (often <code>1</code> for 3D patches when running on a 12GB GPU).  </li>
 <li><code>eval_interval</code>: validation frequency.  </li>
-<li>
-<p><code>ckpt_interval</code>: checkpoint save interval.</p>
+<li><code>ckpt_interval</code>: checkpoint save interval.</li>
+</ul>
 </li>
 <li>
 <p><strong>Patch &amp; resolution:</strong></p>
-</li>
+<ul>
 <li><code>patch_size</code>: e.g. <code>[128, 128, 128]</code>.  </li>
 <li><code>stride</code>: e.g. <code>[64, 64, 64]</code> (controls overlap).  </li>
-<li>
-<p><code>original_res</code>, <code>target_res</code>: physical resolution metadata (often equal for now).</p>
+<li><code>original_res</code>, <code>target_res</code>: physical resolution metadata (often equal for now).</li>
+</ul>
 </li>
 <li>
 <p><strong>Preprocessing &amp; sampling:</strong></p>
-</li>
+<ul>
 <li><code>clahe</code>: whether to apply CLAHE contrast normalisation.  </li>
 <li><code>subsample_frac</code>, <code>subsample_number</code>, <code>subsample_seed</code>: control patch subsampling.  </li>
 <li><code>balance_patches</code>: if <code>True</code>, enforce a balance between positive/negative patches.  </li>
-<li>
-<p><code>min_positive_pixels</code>: minimum number of positive pixels per patch to consider it "positive".</p>
+<li><code>min_positive_pixels</code>: minimum number of positive pixels per patch to consider it "positive".</li>
+</ul>
 </li>
 <li>
 <p><strong>Optimisation &amp; loss:</strong></p>
-</li>
+<ul>
 <li><code>learning_rate</code>, <code>learning_rate_after_hotstart_50</code>.  </li>
 <li><code>loss_type</code>: <code>'DiceLoss'</code> or <code>'DiceCE'</code> (Dice + cross-entropy).  </li>
-<li>
-<p><code>loss_weights</code>: weight factor to compensate for class imbalance.</p>
+<li><code>loss_weights</code>: weight factor to compensate for class imbalance.</li>
+</ul>
 </li>
 <li>
 <p><strong>Augmentation &amp; model init:</strong></p>
-</li>
+<ul>
 <li><code>rotation_augs</code>, <code>contrast_augs</code>.  </li>
 <li><code>model_loc</code> / <code>resume_checkpoint</code>: path to a checkpoint (for fine-tuning) or <code>None</code> for training from scratch. <strong><em>This will be updated and cleaned up in newer releases of code.</em></strong></li>
 <li><code>freeze_encoder</code>, <code>hotstart</code>: options to partially freeze or warm-start the model.</li>
+</ul>
+</li>
 </ul>
 <p>Both MONAI U-Net and RS-UNet use the same high-level config; the difference is which script you call and what <code>model_type</code> you specify.</p>
 <h3 id="inference-configuration">Inference configuration<a class="headerlink" href="#inference-configuration" title="Permanent link">&para;</a></h3>
@@ -2065,9 +2089,11 @@ We can adapt this framework to explore affinity-based methods for mitochondria s
 <h3 id="choosing-a-backbone">Choosing a backbone<a class="headerlink" href="#choosing-a-backbone" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Start with the <strong>MONAI U-Net</strong> if you want a straightforward baseline and easier debugging.  </li>
-<li>Try <strong>RS-UNet</strong> if you:</li>
+<li>Try <strong>RS-UNet</strong> if you:<ul>
 <li>already have a working baseline, and</li>
 <li>want to see whether residual blocks improve IoU / Dice for your dataset.</li>
+</ul>
+</li>
 </ul>
 <h3 id="tuning-training">Tuning training<a class="headerlink" href="#tuning-training" title="Permanent link">&para;</a></h3>
 <ul>
@@ -2097,26 +2123,30 @@ We can adapt this framework to explore affinity-based methods for mitochondria s
 <p>for a few representative subvolumes before trusting metrics alone.</p>
 <h2 id="future-work-open-questions">Future Work / Open Questions<a class="headerlink" href="#future-work-open-questions" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Better instance segmentation</strong>  </li>
 <li>
-<p>Explore more advanced instance-labelling methods (beyond plain connected components) while keeping the semantic-first philosophy.</p>
+<p><strong>Better instance segmentation</strong>  </p>
+<ul>
+<li>Explore more advanced instance-labelling methods (beyond plain connected components) while keeping the semantic-first philosophy.</li>
+</ul>
 </li>
 <li>
 <p><strong>Tighter integration with Empanada</strong>  </p>
-</li>
-<li>
-<p>Streamline workflows for transferring models and labels between Empanada and Catena.</p>
+<ul>
+<li>Streamline workflows for transferring models and labels between Empanada and Catena.</li>
+</ul>
 </li>
 <li>
 <p><strong>Cross-dataset generalisation</strong>  </p>
-</li>
-<li>
-<p>Systematically test how well models trained on one FIBSEM dataset transfer to others, and what minimal fine-tuning is required.</p>
+<ul>
+<li>Systematically test how well models trained on one FIBSEM dataset transfer to others, and what minimal fine-tuning is required.</li>
+</ul>
 </li>
 <li>
 <p><strong>Joint modelling with other modalities</strong>  </p>
-</li>
+<ul>
 <li>Use shared backbones or multi-task setups (e.g. neurons + mitochondria) to exploit shared structure in EM data, while keeping the current pipelines as a simple, reliable baseline.</li>
+</ul>
+</li>
 </ul>
 <p>The current design aims to be <strong>practical, transparent, and composable</strong> good enough to use today, and flexible enough to evolve as we gather more data and experience.</p>
 

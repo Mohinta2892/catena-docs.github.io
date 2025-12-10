@@ -1148,6 +1148,56 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Alternatives Considered">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-use-original-synister-as-is" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Use original Synister as-is
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-single-backbone-vs-multiple-architectures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Single backbone vs multiple architectures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-ad-hoc-scripts-vs-structured-engineconfig-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Ad-hoc scripts vs structured engine/config layout
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-fixed-data-source-vs-multiple-backends" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Fixed data source vs multiple backends
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1497,6 +1547,56 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Alternatives Considered">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-use-original-synister-as-is" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Use original Synister as-is
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-single-backbone-vs-multiple-architectures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Single backbone vs multiple architectures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-ad-hoc-scripts-vs-structured-engineconfig-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Ad-hoc scripts vs structured engine/config layout
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-fixed-data-source-vs-multiple-backends" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Fixed data source vs multiple backends
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1576,26 +1676,265 @@
 
 <h1 id="design-choices">Design Choices<a class="headerlink" href="#design-choices" title="Permanent link">&para;</a></h1>
 <blockquote>
-<p>This page explains the decisions we made, alternatives considered, trade-offs, and future work.</p>
+<p>This page explains the decisions we made for neurotransmitter classification in Catena, alternatives considered, trade-offs, and how the current code is organised.   </p>
 </blockquote>
 <h2 id="problem-goal">Problem / Goal<a class="headerlink" href="#problem-goal" title="Permanent link">&para;</a></h2>
-<p>What outcome are we optimizing for?</p>
-<h2 id="alternatives-considered">Alternatives Considered<a class="headerlink" href="#alternatives-considered" title="Permanent link">&para;</a></h2>
+<p>Once we have a structural connectome (neurons + synapses + partners), we still don't know whether each synaptic edge is <strong>excitatory</strong> or <strong>inhibitory</strong>. The goal of this module is to:</p>
 <ul>
-<li>Option A – pros/cons</li>
-<li>Option B – pros/cons</li>
-<li>Option C – pros/cons</li>
+<li>assign a <strong>neurotransmitter class</strong> to pre-synaptic sites (and by extension, to neurons),</li>
+<li>so that each edge in the graph can be labelled with a <strong>functional sign</strong> (excitatory vs inhibitory),</li>
+<li>using <strong>curated adult fly data</strong> as ground-truth, with only ~1000 examples (can be extended to more) per major transmitter in our current local datasets. </li>
 </ul>
+<p>This is deliberately scoped as a <strong>supervised classification</strong> problem:</p>
+<ul>
+<li>Input: small 3D EM cutouts (patches) around pre-synaptic sites.  </li>
+<li>Output: one of a small set of neurotransmitter labels (e.g. acetylcholine, GABA, glutamate, serotonin, dopamine, octopamine, tyramine).  </li>
+</ul>
+<p>We operate under a practical version of <strong>Dale's Principle</strong>: a neuron is treated as primarily excitatory or inhibitory based on its dominant transmitter, so that its outgoing synapses inherit a consistent sign.</p>
+<h2 id="alternatives-considered">Alternatives Considered<a class="headerlink" href="#alternatives-considered" title="Permanent link">&para;</a></h2>
+<h3 id="1-use-original-synister-as-is">1. Use original Synister as-is<a class="headerlink" href="#1-use-original-synister-as-is" title="Permanent link">&para;</a></h3>
+<p>The starting point for this module is Nil Eckstein's <strong>Synister</strong> project (and its updated dev branch by Diane Adjavon at HHMI Janelia).</p>
+<p><strong>Option:</strong> keep Synister's original repo and configuration structure untouched, and just plug in local data.</p>
+<ul>
+<li><strong>Pros</strong></li>
+<li>Battle-tested on large datasets.</li>
+<li>
+<p>No extra work restructuring the code, hoping that it works off-the-shelf.</p>
+</li>
+<li>
+<p><strong>Cons</strong></p>
+</li>
+<li>The original code targets <strong>large-scale Janelia pipelines</strong>, not small curated local datasets.</li>
+<li>Configuration and data paths are less convenient for our <strong>local, smaller</strong> adult-fly-derived cutouts.</li>
+<li>Harder to evolve in lockstep with Catena's conventions and environment setup.</li>
+</ul>
+<p><strong>Decision:</strong> reimplement Synister's core ideas <strong>inside Catena</strong>, by adapting the layout, configuration, and data loading to our use case.</p>
+<h3 id="2-single-backbone-vs-multiple-architectures">2. Single backbone vs multiple architectures<a class="headerlink" href="#2-single-backbone-vs-multiple-architectures" title="Permanent link">&para;</a></h3>
+<p>The original Synister used a <strong>VGG-style</strong> 3D CNN. Our reimplementation adds a <strong>3D ResNet-18-style backbone</strong> (lightweight residual network) and keeps both options available.</p>
+<p><strong>Option:</strong> choose only one (VGG <em>or</em> ResNet) and simplify.</p>
+<ul>
+<li><strong>Pros</strong></li>
+<li>Less code and fewer configs to maintain.</li>
+<li>
+<p>Fewer model choices for users to worry about.</p>
+</li>
+<li>
+<p><strong>Cons</strong></p>
+</li>
+<li>Harder to compare architectures on the same data and pipeline.</li>
+<li>Less flexibility if one backbone behaves better on some neurotransmitters or datasets.</li>
+</ul>
+<p><strong>Decision:</strong> support <strong>both</strong> VGG3D and a lightweight 3D ResNet:</p>
+<ul>
+<li>VGG3D: closer to the original Synister implementation.  </li>
+<li>ResNet3D: newer, residual architecture (as shown in the ResNet schematic, Figure 1).</li>
+</ul>
+<p>This is reflected in <code>models/resnet3d.py</code> and <code>models/vgg3d.py</code>, selectable via configuration (<code>TRAIN.MODEL_TYPE</code>). </p>
+<h3 id="3-ad-hoc-scripts-vs-structured-engineconfig-layout">3. Ad-hoc scripts vs structured engine/config layout<a class="headerlink" href="#3-ad-hoc-scripts-vs-structured-engineconfig-layout" title="Permanent link">&para;</a></h3>
+<p><strong>Option:</strong> have a single monolithic training/prediction script with hard-coded paths.</p>
+<ul>
+<li>
+<p><strong>Pros</strong></p>
+<ul>
+<li>Quick to prototype.</li>
+<li>Fewer files to read.</li>
+</ul>
+</li>
+<li>
+<p><strong>Cons</strong></p>
+<ul>
+<li>Fragile and hard to reuse across datasets.</li>
+<li>Harder to share experiments or reproduce results.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Decision:</strong> use a structured layout very similar to Synister's updated dev branch: </p>
+<ul>
+<li><code>config/</code> - YAML/py-style configs for train and predict.  </li>
+<li><code>engine/train/train_3d.py</code> - core training logic.  </li>
+<li><code>engine/predict/predict_3d.py</code> - prediction logic.  </li>
+<li><code>engine/post/evaluate_3d.py</code> - evaluation.  </li>
+<li><code>models/</code> - backbone definitions (ResNet3D, VGG3D).  </li>
+<li><code>data_utils/pre_process/split_data.py</code> - reproducible train/val split generation.  </li>
+<li>Top-level <code>trainer.py</code> and <code>predicter.py</code> launchers that read the configs.</li>
+</ul>
+<p>This keeps the <strong>logic, configuration, and models cleanly separated</strong>, making it easier to experiment and compare runs.</p>
+<h3 id="4-fixed-data-source-vs-multiple-backends">4. Fixed data source vs multiple backends<a class="headerlink" href="#4-fixed-data-source-vs-multiple-backends" title="Permanent link">&para;</a></h3>
+<p>Our data comes from curated adult-fly EM datasets, but the exact storage can vary:</p>
+<ul>
+<li>HDF5 cutouts in class-labelled directories,  </li>
+<li>pickled splits,  </li>
+<li>or synapse locations stored in MongoDB.</li>
+</ul>
+<p><strong>Option:</strong> only support one data source (e.g. directory of HDF5 files).</p>
+<ul>
+<li><strong>Pros</strong></li>
+<li>Simpler data loading code.</li>
+<li>
+<p>Less configuration branching.</p>
+</li>
+<li>
+<p><strong>Cons</strong></p>
+</li>
+<li>Inflexible for different labs / infrastructure.</li>
+<li>Hard to scale to large, database-backed synapse tables.</li>
+</ul>
+<p><strong>Decision:</strong> support <strong>three</strong> data source methods for prediction, configured via <code>_C.DATA_SOURCE.METHOD</code>:</p>
+<ul>
+<li><code>'pkl'</code> - use a <code>.pkl</code> file defining train/val splits.  </li>
+<li><code>'directory'</code> - point to a directory of HDF5 files (e.g. unlabeled or new data).  </li>
+<li><code>'mongo'</code> - pull synapse locations from a MongoDB collection for large-scale inference.   </li>
+</ul>
+<p>This matches the original Synister philosophy while remaining practical for smaller local datasets.</p>
 <h2 id="decision">Decision<a class="headerlink" href="#decision" title="Permanent link">&para;</a></h2>
-<p>What we chose and why.</p>
+<p>We adopted the following design:</p>
+<ol>
+<li>
+<p><strong>Problem framing:</strong> 3D patch-based <strong>supervised classification</strong> of pre-synaptic sites into neurotransmitter classes, used to sign and label edges in an existing connectome. </p>
+</li>
+<li>
+<p><strong>Core model family:</strong> Synister-style 3D CNNs with <strong>two backbones</strong>:</p>
+<ul>
+<li>3D VGG-like network.  </li>
+<li>Lightweight 3D ResNet-18-style network (Figure 1). </li>
+</ul>
+</li>
+<li>
+<p><strong>Code structure:</strong>  </p>
+<ul>
+<li>Config-driven training and prediction (<code>config/config.py</code>, <code>config/config_predict.py</code>).  </li>
+<li>Modular <code>engine/</code> folder with <code>train_3d.py</code>, <code>predict_3d.py</code>, and <code>evaluate_3d.py</code>.  </li>
+<li>Separate <code>models/</code> for backbones and <code>data_utils/</code> for preprocessing/splitting.</li>
+</ul>
+</li>
+<li>
+<p><strong>Data sources:</strong>  </p>
+<ul>
+<li>Local HDF5 patch datasets.  </li>
+<li>Optional <code>.pkl</code> split files for reproducible experiments.  </li>
+<li>Optional MongoDB backend for large-scale prediction runs.</li>
+</ul>
+</li>
+</ol>
+<p>This keeps the module close in spirit to Synister, while being adapted for Catena's curated, smaller-scale neurotransmitter datasets.</p>
 <h2 id="trade-offs">Trade-offs<a class="headerlink" href="#trade-offs" title="Permanent link">&para;</a></h2>
-<p>Compute, memory, DX, accuracy, portability, etc.</p>
+<ul>
+<li>
+<p><strong>Model richness vs dataset size</strong><br />
+Our largest dataset currently has on the order of ~1000 examples per major neurotransmitter. Using 3D CNNs (VGG/ResNet) is expressive, but we must be careful not to overfit. The design intentionally stays with <strong>moderate-sized backbones</strong> rather than very deep networks.</p>
+</li>
+<li>
+<p><strong>Multiple backbones vs simplicity</strong><br />
+Supporting both VGG3D and ResNet3D adds complexity to configs and code. The upside is that it is easy to compare and switch backbones without rewriting the pipeline.</p>
+</li>
+<li>
+<p><strong>Configuration flexibility vs user overhead</strong><br />
+  The YACS-style config with many knobs (<code>DATA.USE_SPLIT_FILE</code>, <code>TRAIN.MODEL_TYPE</code>, Mongo settings, etc.) is powerful but can feel heavy at first. The trade-off is made in favour of <strong>reproducibility and reuse</strong>.</p>
+</li>
+<li>
+<p><strong>3D CNN patches vs graph-level models</strong><br />
+  We stay at the level of <strong>3D local patches</strong> around synapses, rather than using graph neural networks or whole-cell context. This simplifies the training story and matches Synister's original framing, but it means that purely local morphology + intensity around a synapse must carry most of the classification signal.</p>
+</li>
+</ul>
 <h2 id="implementation-notes">Implementation Notes<a class="headerlink" href="#implementation-notes" title="Permanent link">&para;</a></h2>
-<p>Key parameters, scripts, data flow.</p>
+<ul>
+<li>
+<p><strong>Training</strong></p>
+<ul>
+<li>Launched via:
+    <div class="highlight"><pre><span></span><code>python<span class="w"> </span>trainer.py<span class="w"> </span>-c<span class="w"> </span>config/config.py
+</code></pre></div></li>
+<li><code>TRAIN.MODEL_TYPE</code> chooses between <code>"RESNET"</code> and <code>"VGG"</code>.</li>
+<li><code>DATA.USE_SPLIT_FILE</code> + <code>DATA.SPLIT_FILE</code> control whether to use a predefined <code>.pkl</code> split.</li>
+</ul>
+</li>
+<li>
+<p><strong>Prediction</strong></p>
+<ul>
+<li>Launched via:
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>predicter.py<span class="w"> </span>config/config_predict.py
+</code></pre></div></li>
+<li><code>_C.PREDICT.CHECKPOINT</code> sets the model checkpoint.</li>
+<li><code>_C.RAW_DATA.CONTAINER</code> and <code>_C.RAW_DATA.DATASET</code> define the raw EM source.</li>
+<li><code>_C.DATA_SOURCE.METHOD ∈ {"pkl", "directory", "mongo"}</code> selects how synapse patches are sourced.</li>
+</ul>
+</li>
+<li>
+<p><strong>Evaluation</strong></p>
+<ul>
+<li>Uses <code>engine/post/evaluate_3d.py</code> (or <code>scripts/evaluate.py</code>) to compute:</li>
+<li>accuracy,</li>
+<li>per-class metrics,</li>
+<li>confusion matrices<br />
+from prediction CSVs.</li>
+</ul>
+</li>
+<li>
+<p><strong>Integration with the larger pipeline</strong></p>
+<ul>
+<li><strong>Gunpowder</strong> and <strong>Daisy</strong> are used for data loading and scheduling in the larger pipeline context (e.g. when sourcing synapse locations from MongoDB or large volumes), following Synister.</li>
+</ul>
+</li>
+</ul>
 <h2 id="operational-guidance">Operational Guidance<a class="headerlink" href="#operational-guidance" title="Permanent link">&para;</a></h2>
-<p>Tuning tips, failure modes, troubleshooting.</p>
+<ul>
+<li>
+<p><strong>Create a reusable split</strong></p>
+<ul>
+<li>Start by creating a split with <code>split_data.py</code> (or a similar script) so that you have a reusable <code>.pkl</code> file for train/val splits.</li>
+</ul>
+</li>
+<li>
+<p><strong>Configure <code>config/config.py</code></strong></p>
+<ul>
+<li>Set <code>DATA.DATA_DIR_PATH</code> to your root directory containing one subfolder per neurotransmitter class.</li>
+<li>Enable <code>DATA.USE_SPLIT_FILE</code> and point <code>DATA.SPLIT_FILE</code> to your split <code>.pkl</code>.</li>
+<li>Choose <code>TRAIN.MODEL_TYPE = "RESNET"</code> or <code>"VGG"</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong>For small datasets</strong></p>
+<ul>
+<li>Keep augmentations modest.</li>
+<li>Monitor <strong>per-class performance</strong> (some transmitters may have fewer examples if your data is imbalanced).</li>
+<li>Use <strong>early stopping</strong> or careful checkpoint selection.</li>
+</ul>
+</li>
+<li>
+<p><strong>Prediction on large volumes</strong></p>
+<ul>
+<li>Use the <code>'mongo'</code> data source mode if synapse coordinates live in a MongoDB collection.</li>
+<li>Or use <code>'directory'</code> mode to sweep over new HDF5 cutouts.</li>
+</ul>
+</li>
+<li>
+<p><strong>Always sanity-check</strong></p>
+<ul>
+<li>Class balance in your training set.</li>
+<li>Per-class confusion matrices.</li>
+<li>A few visual examples of <strong>correctly vs incorrectly</strong> classified synapses.</li>
+</ul>
+</li>
+</ul>
 <h2 id="future-work-open-questions">Future Work / Open Questions<a class="headerlink" href="#future-work-open-questions" title="Permanent link">&para;</a></h2>
-<p>What we plan to revisit and why.</p>
+<ul>
+<li>
+<p><strong>More architectures</strong><br />
+  The module is already designed to support multiple backbones; adding other 3D CNNs or lightweight transformers is straightforward, but needs to be justified by data scale.</p>
+</li>
+<li>
+<p><strong>Better integration with connectome-level analysis</strong><br />
+  Aggregating synapse-level predictions into neuron-level labels (and checking consistency with Dale's Principle) is an obvious next step.</p>
+</li>
+<li>
+<p><strong>Uncertainty and active learning</strong><br />
+  Using model confidence to prioritise which synapses to re-annotate could help expand the curated adult-fly datasets efficiently.</p>
+</li>
+<li>
+<p><strong>Cross-dataset generalisation</strong><br />
+  Evaluating how models trained on one adult-fly dataset transfer to others (or to different species) remains an open question.</p>
+</li>
+</ul>
 
 
 

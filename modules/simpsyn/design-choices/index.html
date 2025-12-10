@@ -920,6 +920,45 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Alternatives Considered">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-cleft-segmentation-with-voxel-wise-masks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Cleft segmentation with voxel-wise masks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-synful-style-joint-mask-regression-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Synful-style joint mask + regression models
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-detection-style-point-predictors-no-masks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Detection-style point predictors (no masks)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1499,6 +1538,45 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Alternatives Considered">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-cleft-segmentation-with-voxel-wise-masks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Cleft segmentation with voxel-wise masks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-synful-style-joint-mask-regression-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Synful-style joint mask + regression models
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-detection-style-point-predictors-no-masks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Detection-style point predictors (no masks)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1578,26 +1656,275 @@
 
 <h1 id="design-choices">Design Choices<a class="headerlink" href="#design-choices" title="Permanent link">&para;</a></h1>
 <blockquote>
-<p>This page explains the decisions we made, alternatives considered, trade-offs, and future work.</p>
+<p>This page explains the decisions behind <strong>SimpSyn</strong> for synapse detection, alternatives considered, trade-offs, and how to use it in practice.   </p>
 </blockquote>
 <h2 id="problem-goal">Problem / Goal<a class="headerlink" href="#problem-goal" title="Permanent link">&para;</a></h2>
-<p>What outcome are we optimizing for?</p>
-<h2 id="alternatives-considered">Alternatives Considered<a class="headerlink" href="#alternatives-considered" title="Permanent link">&para;</a></h2>
+<p>Synapse detection is about more than finding "something dark" in EM; we want a method that:</p>
 <ul>
-<li>Option A – pros/cons</li>
-<li>Option B – pros/cons</li>
-<li>Option C – pros/cons</li>
+<li>works with <strong>point annotations</strong> (pre/post sites) rather than dense cleft masks,  </li>
+<li>is <strong>lightweight and simple to train</strong>,  </li>
+<li>runs well on <strong>3D vEM volumes</strong> (often anisotropic),  </li>
+<li>and generalises across <strong>invertebrate/vertebrate datasets</strong> (e.g. different species / preparations).</li>
 </ul>
+<p>SimpSyn is our answer to this: an <strong>ultra-lightweight synapse detector</strong> that rethinks synapse detection as a <strong>two-channel segmentation task</strong> (pre and post masks) with simple geometric post-processing.  </p>
+<h2 id="alternatives-considered">Alternatives Considered<a class="headerlink" href="#alternatives-considered" title="Permanent link">&para;</a></h2>
+<h3 id="1-cleft-segmentation-with-voxel-wise-masks">1. Cleft segmentation with voxel-wise masks<a class="headerlink" href="#1-cleft-segmentation-with-voxel-wise-masks" title="Permanent link">&para;</a></h3>
+<p><strong>Idea:</strong> Annotate full synaptic clefts voxel-wise and train a network to segment cleft voxels.  </p>
+<ul>
+<li><strong>Pros</strong></li>
+<li>Very detailed supervision.</li>
+<li>Well-established in the literature for synapse detection.</li>
+<li><strong>Cons</strong></li>
+<li>Cleft masks are <strong>tedious and expensive</strong> to annotate.</li>
+<li>Voxel-wise labels do not scale well across multiple datasets or species.</li>
+</ul>
+<p>Given Catena's emphasis on reproducible and <em>scalable</em> ground-truth generation, relying only on dense cleft masks is not attractive.</p>
+<h3 id="2-synful-style-joint-mask-regression-models">2. Synful-style joint mask + regression models<a class="headerlink" href="#2-synful-style-joint-mask-regression-models" title="Permanent link">&para;</a></h3>
+<p><code>Synful</code> (another module in Catena) jointly learns:</p>
+<ul>
+<li>a <strong>mask segmentation</strong> and  </li>
+<li>a <strong>regression task</strong> (e.g. partner direction),</li>
+</ul>
+<p>from point annotations. This is powerful but more complex.  </p>
+<ul>
+<li><strong>Pros</strong></li>
+<li>Richer outputs (joint learning).</li>
+<li>Encodes more geometric information in a single network.</li>
+<li><strong>Cons</strong></li>
+<li>Heavier models and training.</li>
+<li>More complicated objective and post-processing.</li>
+<li>Higher compute cost at inference.</li>
+</ul>
+<p>SimpSyn explicitly <em>deviates</em> from this: it aims to be <strong>simpler and more computationally efficient</strong>, especially when you want something easy to train and deploy on multiple datasets.</p>
+<h3 id="3-detection-style-point-predictors-no-masks">3. Detection-style point predictors (no masks)<a class="headerlink" href="#3-detection-style-point-predictors-no-masks" title="Permanent link">&para;</a></h3>
+<p>Another option is to train pure <strong>point detectors</strong> (e.g. heatmaps or object centres) and skip masks entirely.</p>
+<ul>
+<li><strong>Pros</strong></li>
+<li>Very lightweight outputs.</li>
+<li>Easy to store and combine with partner assignment.</li>
+<li><strong>Cons</strong></li>
+<li>No shape information; harder to reason about ambiguous synapses.</li>
+<li>More sensitive to thresholding and NMS heuristics.</li>
+</ul>
+<p>Given that small, local masks are still quite cheap to predict (and create on-the-fly from literal point coordinates), SimpSyn chooses to keep a <strong>segmentation view</strong>, but make it as light as possible.</p>
 <h2 id="decision">Decision<a class="headerlink" href="#decision" title="Permanent link">&para;</a></h2>
-<p>What we chose and why.</p>
+<p>SimpSyn makes three key design choices:</p>
+<ol>
+<li><strong>Reformulate synapse detection as a 3D segmentation task</strong>  </li>
+<li>Predict two output channels:<ul>
+<li><strong>Channel 0:</strong> pre-synaptic mask  </li>
+<li><strong>Channel 1:</strong> post-synaptic mask  </li>
+</ul>
+</li>
+<li>
+<p>Each channel is trained to segment local 3D regions around annotated pre/post points.</p>
+</li>
+<li>
+<p><strong>Use a 3D Residual U-Net backbone</strong>  </p>
+</li>
+<li>A relatively small 3D <strong>ResUNet</strong> is used as the core model.  </li>
+<li>
+<p>This gives:</p>
+<ul>
+<li>strong performance on 3D EM volumes,  </li>
+<li>good gradient flow (residual connections),  </li>
+<li>and manageable compute cost.</li>
+</ul>
+</li>
+<li>
+<p><strong>Simple, geometry-based post-processing</strong>  </p>
+</li>
+<li>From the two predicted masks:<ul>
+<li><strong>Connected components</strong> are used to isolate individual pre and post objects.  </li>
+<li>Each post-synaptic component is paired with its <strong>nearest pre-synaptic component</strong> (nearest neighbour in 3D space).  </li>
+</ul>
+</li>
+<li>The result is:<ul>
+<li>a set of <strong>pre and post masks</strong>, and  </li>
+<li>a <strong>partner assignment</strong> (pre-&gt;post) per synapse.</li>
+</ul>
+</li>
+</ol>
+<p>SimpSyn is implemented <strong>within BiaPy</strong>, so it can reuse BiaPy's data pipelines, configuration system, and training utilities.<br />
+We are also working fully integrating it within Catena.</p>
 <h2 id="trade-offs">Trade-offs<a class="headerlink" href="#trade-offs" title="Permanent link">&para;</a></h2>
-<p>Compute, memory, DX, accuracy, portability, etc.</p>
+<ul>
+<li><strong>Simplicity vs expressiveness</strong></li>
+<li>By dropping the regression head (as in Synful) and focusing only on segmentation + nearest-neighbour pairing, SimpSyn is easier to train and debug.</li>
+<li>
+<p>The trade-off is that some nuanced geometric relationships must be captured via simple nearest-neighbour heuristics instead of a learned partner model.</p>
+</li>
+<li>
+<p><strong>Masks vs pure points</strong></p>
+</li>
+<li>
+<p>Predicting small masks instead of points costs a bit more in memory and compute, but:</p>
+<ul>
+<li>makes training more stable,</li>
+<li>allows visual inspection of the ultrastructure that "triggered" the detection,</li>
+<li>and provides richer context for later use (e.g. feature extraction).</li>
+</ul>
+</li>
+<li>
+<p><strong>Residual U-Net vs heavier architectures</strong></p>
+</li>
+<li>The chosen 3D Residual U-Net is strong enough for synapse detection but intentionally not huge.</li>
+<li>
+<p>This keeps training and inference practical on typical lab GPUs, at the cost of not exploring very large backbones or transformer-based models.</p>
+</li>
+<li>
+<p><strong>Nearest-neighbour pairing vs learned partner assignment</strong></p>
+</li>
+<li>Nearest-neighbour matching is simple and deterministic.</li>
+<li>It can fail in very dense synaptic regions where pre/post separation is hard and multiple candidates are nearby, but is usually sufficient given good masks.</li>
+</ul>
 <h2 id="implementation-notes">Implementation Notes<a class="headerlink" href="#implementation-notes" title="Permanent link">&para;</a></h2>
-<p>Key parameters, scripts, data flow.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>This may change given that SimpSyn is still undergoing dev work.</p>
+</div>
+<p>From the user's perspective, SimpSyn has three conceptual stages: </p>
+<ol>
+<li><strong>Target generation from point annotations</strong></li>
+<li>For each annotated synapse:<ul>
+<li>a <strong>3D spherical region</strong> is drawn around the pre-synaptic point,</li>
+<li>and another around each post-synaptic point.</li>
+</ul>
+</li>
+<li>
+<p>These spheres become local <strong>binary masks</strong> for the pre and post channels.</p>
+</li>
+<li>
+<p><strong>3D Residual U-Net training (via BiaPy)</strong></p>
+</li>
+<li>Input: EM patches (3D) cropped around synapse regions.</li>
+<li>Output: two-channel prediction (pre mask, post mask).</li>
+<li>Loss: segmentation loss (e.g. Dice/CE combination as configured in BiaPy; see module README for details).</li>
+<li>
+<p>All training logic (patch sampling, augmentations, logging) is handled in the <strong>BiaPy</strong> framework; SimpSyn mainly provides:</p>
+<ul>
+<li>the custom dataset/label definition,</li>
+<li>the ResUNet model configuration,</li>
+<li>and post-processing scripts.</li>
+</ul>
+</li>
+<li>
+<p><strong>Post-processing and partner assignment</strong></p>
+</li>
+<li>For each prediction volume:<ul>
+<li>apply thresholding to obtain binary masks for pre and post channels,</li>
+<li>run <strong>connected component labelling</strong> to extract individual pre and post components,</li>
+<li>for each post component, find the <strong>nearest</strong> pre component (e.g. centroid distance) and assign them as partners.</li>
+</ul>
+</li>
+<li>The final output is:<ul>
+<li>a set of pre + post objects,</li>
+<li>and a table / graph of synaptic connections.</li>
+</ul>
+</li>
+</ol>
+<p><strong>Install &amp; usage</strong> are inherited from BiaPy:</p>
+<ul>
+<li>Follow BiaPy's installation docs:<br />
+<a href="https://biapy.readthedocs.io/en/latest/get_started/installation.html">https://biapy.readthedocs.io/en/latest/get_started/installation.html</a>  </li>
+<li>Then use the SimpSyn-specific configs and scripts in Catena's <code>synapse_detection/simpsyn</code> directory for training and prediction. <strong>This is under works. Full release is pending.</strong></li>
+</ul>
 <h2 id="operational-guidance">Operational Guidance<a class="headerlink" href="#operational-guidance" title="Permanent link">&para;</a></h2>
-<p>Tuning tips, failure modes, troubleshooting.</p>
+<ul>
+<li>
+<p><strong>When to use SimpSyn (vs Synful)</strong>  </p>
+<ul>
+<li>Use <strong>SimpSyn</strong> when:<ul>
+<li>you want a <strong>simple, segmentation-based</strong> detector with point annotations,</li>
+<li>you care about <strong>compute efficiency</strong> and easier deployment,</li>
+<li>and nearest-neighbour partner assignment is sufficient.  </li>
+</ul>
+</li>
+<li>Use <strong>Synful</strong> when:<ul>
+<li>you need richer joint outputs (mask + regression),</li>
+<li>and you're willing to pay higher compute/training complexity.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Data preparation</strong></p>
+<ul>
+<li>Ensure you have <strong>pre/post point annotations</strong> (not just cleft masks). You can use our conversion scripts to convert segments to points.</li>
+<li>Use the provided scripts to convert these into <strong>spherical masks</strong> for training.</li>
+<li>Start with conservative sphere radii; over-large spheres may cause overlaps and reduce specificity.</li>
+</ul>
+</li>
+<li>
+<p><strong>Training</strong></p>
+<ul>
+<li>Start from the default BiaPy config for 3D segmentation and adapt:<ul>
+<li>patch size,</li>
+<li>batch size,</li>
+<li>learning rate,<br />
+to your GPU memory.</li>
+</ul>
+</li>
+<li>Monitor:<ul>
+<li>per-channel Dice/IoU for pre vs post,</li>
+<li>and visual overlays of masks on EM slices to sanity-check.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Inference &amp; post-processing</strong></p>
+<ul>
+<li>Use sliding-window inference (as in BiaPy) for large volumes.</li>
+<li>Carefully tune:<ul>
+<li>probability thresholds for binarisation,</li>
+<li>connected component size filters,</li>
+<li>and the maximum distance allowed for pre-post pairing.</li>
+</ul>
+</li>
+<li>Inspect a few regions with:<ul>
+<li>EM + predicted masks,</li>
+<li>pre/post centroids,</li>
+<li>and final partner assignments.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Validation &amp; curation</strong></p>
+<ul>
+<li>For high-value datasets, run critical regions through <strong>CATMAID</strong> or your preferred proofreading tool to:<ul>
+<li>tag <code>correct/incorrect/uncertain</code>,</li>
+<li>and create a curated benchmark for comparing SimpSyn, Synful, or other methods.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Read more about <strong>SimpSyn</strong> in our pre-print: <a href="https://arxiv.org/html/2509.17041v1">Towards Generalized Synapse Detection Across Invertebrate Species</a></p>
 <h2 id="future-work-open-questions">Future Work / Open Questions<a class="headerlink" href="#future-work-open-questions" title="Permanent link">&para;</a></h2>
-<p>What we plan to revisit and why.</p>
+<ul>
+<li><strong>More robust partner assignment</strong></li>
+<li>
+<p>Explore score-based or learned matching between pre/post components without sacrificing SimpSyn's simplicity.</p>
+</li>
+<li>
+<p><strong>Better handling of dense synaptic regions</strong></p>
+</li>
+<li>
+<p>Investigate how the segmentation + connected components pipeline behaves in very dense neuropil, and whether modest model or post-processing changes improve separation.</p>
+</li>
+<li>
+<p><strong>Cross-dataset generalisation</strong></p>
+</li>
+<li>
+<p>The associated preprint, <em>Towards Generalized Synapse Detection Across Invertebrate Species</em>, will inform how well SimpSyn transfers across species and preparations and what minimal fine-tuning is required.</p>
+</li>
+<li>
+<p><strong>Closer integration into Catena's graph-building tools</strong></p>
+</li>
+<li>Streamline conversion of SimpSyn outputs into Catena's standard synapse tables and connectivity graphs, and unify evaluation across SimpSyn, Synful, and other detectors.</li>
+</ul>
 
 
 

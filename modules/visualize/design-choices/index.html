@@ -1368,6 +1368,45 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Alternatives Considered">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-only-napari" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Only Napari
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-only-neuroglancer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Only Neuroglancer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-custom-gui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Custom GUI
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1378,6 +1417,67 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Decision">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-separate-environments-per-viewer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Separate environments per viewer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-generic-zarrhdf-loaders-in-napari" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Generic Zarr/HDF loaders in Napari
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-explicit-handling-of-resolution-and-offsets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Explicit handling of resolution and offsets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-lsd-padding-as-a-first-class-concern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. LSD padding as a first-class concern
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-synapse-representation-points-connectors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Synapse representation: points + connectors
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1495,6 +1595,45 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Alternatives Considered">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-only-napari" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Only Napari
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-only-neuroglancer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Only Neuroglancer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-custom-gui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Custom GUI
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1505,6 +1644,67 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Decision">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-separate-environments-per-viewer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Separate environments per viewer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-generic-zarrhdf-loaders-in-napari" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Generic Zarr/HDF loaders in Napari
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-explicit-handling-of-resolution-and-offsets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Explicit handling of resolution and offsets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-lsd-padding-as-a-first-class-concern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. LSD padding as a first-class concern
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-synapse-representation-points-connectors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Synapse representation: points + connectors
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1577,23 +1777,194 @@
 <p>This page explains the decisions we made, alternatives considered, trade-offs, and future work.</p>
 </blockquote>
 <h2 id="problem-goal">Problem / Goal<a class="headerlink" href="#problem-goal" title="Permanent link">&para;</a></h2>
-<p>What outcome are we optimizing for?</p>
-<h2 id="alternatives-considered">Alternatives Considered<a class="headerlink" href="#alternatives-considered" title="Permanent link">&para;</a></h2>
+<p>Catena produces many intermediate artefacts:</p>
 <ul>
-<li>Option A – pros/cons</li>
-<li>Option B – pros/cons</li>
-<li>Option C – pros/cons</li>
+<li>LSDs, affinities, segmentations,</li>
+<li>synapse annotations and model predictions,</li>
+<li>mitochondria masks, neuron IDs, etc.</li>
 </ul>
+<p>We need <strong>simple, scriptable ways</strong> to:</p>
+<ul>
+<li>inspect the EM volumes and labels,</li>
+<li>overlay multiple modalities (raw + seg + synapses),</li>
+<li>debug coordinate issues (offsets, resolutions, ZYX vs XYZ),</li>
+<li>without locking into one viewer or data backend.   </li>
+</ul>
+<p>The Visualize module is built around:</p>
+<ul>
+<li><strong>Napari</strong> for lightweight local exploration,</li>
+<li><strong>Neuroglancer</strong> for large-scale 3D browsing and annotation layers.</li>
+</ul>
+<h2 id="alternatives-considered">Alternatives Considered<a class="headerlink" href="#alternatives-considered" title="Permanent link">&para;</a></h2>
+<h3 id="1-only-napari">1. Only Napari<a class="headerlink" href="#1-only-napari" title="Permanent link">&para;</a></h3>
+<p>Napari by itself is excellent for local 2D/3D viewing, but:</p>
+<ul>
+<li>does not natively support web sharing or multi-user access,</li>
+<li>is less suited for working with <strong>very large</strong> volumes and annotation layers in the browser.</li>
+</ul>
+<h3 id="2-only-neuroglancer">2. Only Neuroglancer<a class="headerlink" href="#2-only-neuroglancer" title="Permanent link">&para;</a></h3>
+<p>Neuroglancer is ideal for huge datasets and networked access, but:</p>
+<ul>
+<li>setup is more involved,</li>
+<li>the workflow is heavier for <strong>quick local checks</strong>,</li>
+<li>tight integration with Python-based preprocessing (like padding LSD segmentations) is easier to iterate on in Napari.</li>
+</ul>
+<h3 id="3-custom-gui">3. Custom GUI<a class="headerlink" href="#3-custom-gui" title="Permanent link">&para;</a></h3>
+<p>A bespoke GUI would add maintenance burden and duplicate features already well served by Napari/Neuroglancer.</p>
+<p><strong>Decision:</strong> support <strong>both</strong> Napari and Neuroglancer through small focused scripts, rather than inventing new viewers.</p>
 <h2 id="decision">Decision<a class="headerlink" href="#decision" title="Permanent link">&para;</a></h2>
-<p>What we chose and why.</p>
+<h3 id="1-separate-environments-per-viewer">1. Separate environments per viewer<a class="headerlink" href="#1-separate-environments-per-viewer" title="Permanent link">&para;</a></h3>
+<p>The module ships two environment files:</p>
+<ul>
+<li><code>environment_napari.yml</code></li>
+<li><code>environment_neuroglancer.yml</code> (plus a Mac variant)</li>
+</ul>
+<p>Reasons:</p>
+<ul>
+<li>Napari and Neuroglancer have <strong>different dependency stacks</strong> and expectations.</li>
+<li>Pinning versions in dedicated envs improves <strong>reproducibility</strong> and avoids conflicts.</li>
+<li>Users can install only what they need (Napari-only, Neuroglancer-only, or both). :contentReference[oaicite:16]{index=16}  </li>
+</ul>
+<h3 id="2-generic-zarrhdf-loaders-in-napari">2. Generic Zarr/HDF loaders in Napari<a class="headerlink" href="#2-generic-zarrhdf-loaders-in-napari" title="Permanent link">&para;</a></h3>
+<p><code>visualize_napari.py</code>:</p>
+<ul>
+<li>walks the entire Zarr/HDF tree and auto-discovers datasets,</li>
+<li>adds <strong>image</strong> layers for non-label arrays,</li>
+<li>adds <strong>label</strong> layers for datasets whose names contain <code>label</code> or <code>seg</code>.</li>
+</ul>
+<p>This avoids hard-coding dataset keys and makes the script reusable across:</p>
+<ul>
+<li>LSD outputs,</li>
+<li>synapse volumes,</li>
+<li>mitochondria/neuron IDs stored in the same container.</li>
+</ul>
+<p>It also supports:</p>
+<ul>
+<li>loading full datasets for small volumes,</li>
+<li>or <strong>slicing</strong> (<code>-s</code>, <code>-sf</code>, <code>-st</code>) to avoid blowing up RAM on large volumes. </li>
+</ul>
+<h3 id="3-explicit-handling-of-resolution-and-offsets">3. Explicit handling of resolution and offsets<a class="headerlink" href="#3-explicit-handling-of-resolution-and-offsets" title="Permanent link">&para;</a></h3>
+<p>Synapse visualisation scripts (Napari + Neuroglancer):</p>
+<ul>
+<li>read <strong>offset attributes</strong> from datasets, when present,</li>
+<li>convert synapse locations from <strong>nm to voxel coordinates</strong> using a user-specified resolution (e.g. <code>40,4,4</code>),  </li>
+<li>add this offset/scale before plotting pre/post points and connectors.</li>
+</ul>
+<p>This makes it possible to:</p>
+<ul>
+<li>overlay raw, labels, and annotations correctly,</li>
+<li>handle CREMI-style volumes and derived cubes consistently.</li>
+</ul>
+<h3 id="4-lsd-padding-as-a-first-class-concern">4. LSD padding as a first-class concern<a class="headerlink" href="#4-lsd-padding-as-a-first-class-concern" title="Permanent link">&para;</a></h3>
+<p>LSD training uses <strong>valid convolutions</strong>, yielding smaller outputs than the input raw (border pixels are chopped off). The dedicated doc <code>pad_seg_for_napari_viz.md</code>:</p>
+<ul>
+<li>explains why shapes differ,</li>
+<li>shows how to transpose if needed,</li>
+<li>gives a concrete <code>numpy.pad</code> snippet that pads segmentations symmetrically to match raw.</li>
+</ul>
+<p>Instead of hiding this, the design makes padding <strong>explicit</strong> so users understand and control how segmentations are aligned.</p>
+<h3 id="5-synapse-representation-points-connectors">5. Synapse representation: points + connectors<a class="headerlink" href="#5-synapse-representation-points-connectors" title="Permanent link">&para;</a></h3>
+<p>Both Napari and Neuroglancer scripts model synapses as:</p>
+<ul>
+<li><strong>pre-synaptic points</strong>,  </li>
+<li><strong>post-synaptic points</strong>,  </li>
+<li><strong>line segments</strong> connecting them. </li>
+</ul>
+<p>In Neuroglancer (<code>visualize_nglancer_synapses_hdf.py</code>, <code>visualize_nglancer_synapses_mito_hdf.py</code>, <code>visualize_synful_inference.py</code>):</p>
+<ul>
+<li>these are turned into <code>LocalAnnotationLayer</code>s with appropriate colours and coordinate spaces,</li>
+<li>they can be combined with segmentation layers (neuron IDs, clefts, mito IDs).</li>
+</ul>
+<p>In Napari:</p>
+<ul>
+<li><code>visualize_napari_synapses.py</code> uses <code>Points</code> and <code>Shapes</code> layers,</li>
+<li><code>visualize_napari_synapses_save_load_napari_ids.py</code> additionally tracks <strong>original annotation IDs</strong>, with CSV export/import of Napari index &lt;-&gt; ID mappings.</li>
+</ul>
+<p>This representation is:</p>
+<ul>
+<li>simple,</li>
+<li>easy to reason about,</li>
+<li>and natural to extend (e.g. add properties for scores, IDs, neuron labels).</li>
+</ul>
 <h2 id="trade-offs">Trade-offs<a class="headerlink" href="#trade-offs" title="Permanent link">&para;</a></h2>
-<p>Compute, memory, DX, accuracy, portability, etc.</p>
+<ul>
+<li>
+<p><strong>Flexibility vs boilerplate</strong><br />
+Using small scripts rather than a monolithic "viewer app" means:</p>
+<ul>
+<li>some user-side editing (paths, dataset names, resolutions) is required,</li>
+<li>but each script stays short and easy to adapt.</li>
+</ul>
+</li>
+<li>
+<p><strong>Two envs vs one</strong><br />
+    Separate conda envs add a bit of setup overhead, but materially reduce dependency conflicts between Napari and Neuroglancer stacks.</p>
+</li>
+<li>
+<p><strong>Local vs web</strong><br />
+    Napari is ideal for quick local inspection, while Neuroglancer shines for big volumes and sharing URLs. Supporting both is intentionally redundant but matches real-world workflows.</p>
+</li>
+</ul>
 <h2 id="implementation-notes">Implementation Notes<a class="headerlink" href="#implementation-notes" title="Permanent link">&para;</a></h2>
-<p>Key parameters, scripts, data flow.</p>
+<ul>
+<li>
+<p><strong>Napari</strong></p>
+<ul>
+<li><code>visualize_napari.py</code> - generic viewer for any Zarr/HDF file (raw, seg, affinities, etc.).  </li>
+<li><code>visualize_napari_synapses.py</code> - raw + clefts + pre/post points + connectors.  </li>
+<li><code>visualize_napari_synapses_save_load_napari_ids.py</code> - as above, plus CSV mapping between Napari indices and original annotation IDs.</li>
+</ul>
+</li>
+<li>
+<p><strong>Neuroglancer</strong></p>
+<ul>
+<li><code>nglancer_pyconnectomics_example.py</code> - template for raw/seg/affinity visualisation from Zarr.  </li>
+<li><code>visualize_nglancer_synapses_hdf.py</code> - raw + neuron_ids + clefts + synapse annotations (CREMI-style).  </li>
+<li><code>visualize_nglancer_synapses_mito_hdf.py</code> - above plus mitochondria IDs from separate Zarr.  </li>
+<li><code>visualize_synful_inference.py</code> - Synful predictions, ground-truth synapses, and post-processed synapse tables as annotation layers. </li>
+</ul>
+</li>
+<li>
+<p><strong>Environments</strong></p>
+<ul>
+<li><code>environment_napari.yml</code> - pins Napari version and related scientific Python stack.  </li>
+<li><code>environment_neuroglancer.yml</code> / <code>environment_neuroglancer_mac.yml</code> - pin Neuroglancer, Daisy, funlib, and associated tooling.  </li>
+</ul>
+</li>
+</ul>
 <h2 id="operational-guidance">Operational Guidance<a class="headerlink" href="#operational-guidance" title="Permanent link">&para;</a></h2>
-<p>Tuning tips, failure modes, troubleshooting.</p>
+<ul>
+<li>
+<p>Start with <strong>Napari</strong> for:</p>
+<ul>
+<li>quick inspection of a new volume,</li>
+<li>checking that shapes, axes, and labels line up,</li>
+<li>confirming LSD padding is correct.</li>
+</ul>
+</li>
+<li>
+<p>Move to <strong>Neuroglancer</strong> for:</p>
+<ul>
+<li>exploring bigger volumes,</li>
+<li>sharing a URL with collaborators,</li>
+<li>visualising many synapses, neuron IDs, and mito masks simultaneously.</li>
+</ul>
+</li>
+<li>
+<p>When overlays look wrong:</p>
+<ul>
+<li>print shapes and check ZYX vs XYZ,</li>
+<li>inspect dataset <code>attrs['offset']</code>,</li>
+<li>verify the <code>--res</code> (voxel size) you passed matches the dataset.</li>
+</ul>
+</li>
+</ul>
 <h2 id="future-work-open-questions">Future Work / Open Questions<a class="headerlink" href="#future-work-open-questions" title="Permanent link">&para;</a></h2>
-<p>What we plan to revisit and why.</p>
+<ul>
+<li>More <strong>configuration-driven</strong> scripts (e.g. small YAML specifying paths, keys, resolution) to avoid editing Python directly.</li>
+<li>Tightening the integration with other Catena modules (e.g. direct handoff from Synful/SimpSyn runs to visualisation scripts).</li>
+<li>Optional hooks to automatically open the correct viewer (Napari vs Neuroglancer) based on dataset size and type.</li>
+</ul>
 
 
 

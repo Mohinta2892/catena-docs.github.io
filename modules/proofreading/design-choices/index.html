@@ -1259,6 +1259,56 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Alternatives Considered">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-local-proofreading-of-sub-cubes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Local proofreading of sub-cubes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-whole-brain-proofreading-of-segmentations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Whole-brain proofreading of segmentations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-automatic-proofreading-with-skeletons" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Automatic proofreading with skeletons
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-synapse-proofreading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Synapse proofreading
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1497,6 +1547,56 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Alternatives Considered">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-local-proofreading-of-sub-cubes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Local proofreading of sub-cubes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-whole-brain-proofreading-of-segmentations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Whole-brain proofreading of segmentations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-automatic-proofreading-with-skeletons" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Automatic proofreading with skeletons
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-synapse-proofreading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Synapse proofreading
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1576,26 +1676,277 @@
 
 <h1 id="design-choices">Design Choices<a class="headerlink" href="#design-choices" title="Permanent link">&para;</a></h1>
 <blockquote>
-<p>This page explains the decisions we made, alternatives considered, trade-offs, and future work.</p>
+<p>This page explains the decisions we made for proofreading in Catena, alternatives considered, trade-offs, and where we'd like to go next. </p>
 </blockquote>
 <h2 id="problem-goal">Problem / Goal<a class="headerlink" href="#problem-goal" title="Permanent link">&para;</a></h2>
 <p>What outcome are we optimizing for?</p>
-<h2 id="alternatives-considered">Alternatives Considered<a class="headerlink" href="#alternatives-considered" title="Permanent link">&para;</a></h2>
+<p>Automatic segmentations and synapse detections are never perfect. Proofreading is the process that turns these model outputs into something we can actually trust for:</p>
 <ul>
-<li>Option A – pros/cons</li>
-<li>Option B – pros/cons</li>
-<li>Option C – pros/cons</li>
+<li>circuit reconstruction,</li>
+<li>quantitative analysis,</li>
+<li>and retraining / fine-tuning models.</li>
+</ul>
+<p>The key challenges:</p>
+<ul>
+<li>Proofreading is <strong>expensive and slow</strong>.</li>
+<li>It needs to work at <strong>different scales</strong>:</li>
+<li>small sub-cubes for generating high-quality ground-truth,</li>
+<li>whole-brain volumes for circuit-level correctness,</li>
+<li>object-level (synapses) for connectivity.</li>
+<li>We want every proofreading action to be <strong>reusable</strong>:</li>
+<li>as training data,</li>
+<li>as validation data,</li>
+<li>as an audit trail of what was fixed.</li>
+</ul>
+<p>So this module's goal is to provide a <strong>small set of complementary workflows</strong> that:</p>
+<ul>
+<li>integrate with tools people already use (Seg2Link, CAVE, CATMAID),</li>
+<li>minimise friction for proofreaders,</li>
+<li>and make it easy to feed corrections back into Catena.</li>
+</ul>
+<h2 id="alternatives-considered">Alternatives Considered<a class="headerlink" href="#alternatives-considered" title="Permanent link">&para;</a></h2>
+<h3 id="1-local-proofreading-of-sub-cubes">1. Local proofreading of sub-cubes<a class="headerlink" href="#1-local-proofreading-of-sub-cubes" title="Permanent link">&para;</a></h3>
+<p><strong>Option A - Manual voxel painting in generic tools</strong></p>
+<ul>
+<li><em>Pros</em>: very flexible; any 3D viewer that supports painting can be used.  </li>
+<li><em>Cons</em>: no dedicated UI for split/merge, no notion of segments or labels, higher cognitive and operational load for proofreaders.</li>
+</ul>
+<p><strong>Option B - Custom in-house napari plugins</strong></p>
+<ul>
+<li><em>Pros</em>: full control; could be tailored exactly to our data.  </li>
+<li><em>Cons</em>: extra maintenance burden, duplicated effort versus existing tools.</li>
+</ul>
+<p><strong>Decision</strong>: use <strong>Seg2Link</strong> for local proofreading.</p>
+<p>Seg2Link already offers a <strong>3D proofreading workflow</strong> on top of napari, with:</p>
+<ul>
+<li>convenient inspection of 3D segmentations,</li>
+<li>tools for correcting <strong>split</strong> and <strong>merge</strong> errors,</li>
+<li>the ability to paint <strong>false negative</strong> regions directly.</li>
+</ul>
+<p>At this stage, the only extra work on our side is converting Catena's Zarr outputs to <strong>TIFF</strong> stacks, which we handle with small conversion scripts.</p>
+<h3 id="2-whole-brain-proofreading-of-segmentations">2. Whole-brain proofreading of segmentations<a class="headerlink" href="#2-whole-brain-proofreading-of-segmentations" title="Permanent link">&para;</a></h3>
+<p><strong>Option A - Ad-hoc editing in standard viewers</strong></p>
+<ul>
+<li><em>Pros</em>: trivial to set up; just open the segmentation in any 3D/2D viewer that allows editing.  </li>
+<li><em>Cons</em>: no history; edits are hard to track, organise, or attribute; merging and splitting at whole-brain scale quickly becomes unmanageable.</li>
+</ul>
+<p><strong>Option B - Curation directly via skeleton-editing tools</strong></p>
+<ul>
+<li><em>Pros</em>: closer to the neuron trajectories; intuitive for some workflows.  </li>
+<li><em>Cons</em>: not inherently version-controlled at the segmentation level; harder to reason about global segment changes.</li>
+</ul>
+<p><strong>Decision</strong>: use <strong>CAVE</strong> (FlyWire) for whole-brain proofreading.</p>
+<p>CAVE is essentially a <strong>version control system for segmentations</strong>:</p>
+<ul>
+<li>it tracks all <strong>merge</strong> / <strong>split</strong> operations on neuron instances,</li>
+<li>records who did what and when,</li>
+<li>and offers an API and tooling ecosystem for import/export and analysis.</li>
+</ul>
+<p>This makes it well suited for proofreading <strong>large, ingested volumes</strong>, where we:</p>
+<ul>
+<li>proofread neuron trajectories either densely in regions of interest or sparsely-but-completely across the brain,</li>
+<li>then export the corrected segmentations and use them as training/fine-tuning data for Catena models.</li>
+</ul>
+<h3 id="3-automatic-proofreading-with-skeletons">3. Automatic proofreading with skeletons<a class="headerlink" href="#3-automatic-proofreading-with-skeletons" title="Permanent link">&para;</a></h3>
+<p><strong>Option A - Ignore skeletons for proofreading</strong></p>
+<ul>
+<li><em>Pros</em>: simpler; keep segmentation and skeleton workflows separate.  </li>
+<li><em>Cons</em>: wastes high-quality tracing work that could help fix fragmentations.</li>
+</ul>
+<p><strong>Option B - Heuristic, geometry-based merging only</strong></p>
+<ul>
+<li><em>Pros</em>: possible to merge segments based purely on spatial proximity.  </li>
+<li><em>Cons</em>: blind to true neuron identity; likely to over-merge in crowded regions.</li>
+</ul>
+<p><strong>Decision</strong>: experiment with <strong>CATMAID skeleton-guided merging</strong>.</p>
+<p>We already have <strong>CATMAID skeletons</strong> for some neurons. In this exploratory path, we:</p>
+<ul>
+<li>use each skeleton as a "backbone" that should run through a single neuron,</li>
+<li>detect where a single skeleton intersects multiple segments,</li>
+<li><strong>merge</strong> those segments automatically as belonging to the same neuron.</li>
+</ul>
+<p>Caveats:</p>
+<ul>
+<li>skeleton node placement is not always dense,</li>
+<li>we often need to <strong>resample skeleton points</strong> and fit B-splines / smooth curves to better approximate true trajectories before using them for merging.</li>
+</ul>
+<p>Because we currently do <strong>not</strong> have a huge number of fully complete skeletons, this remains an <strong>experimental</strong> workflow, with a prototype implementation in:</p>
+<ul>
+<li><code>proofreading/auto_merge_seg_w_tracings.py</code></li>
+</ul>
+<h3 id="4-synapse-proofreading">4. Synapse proofreading<a class="headerlink" href="#4-synapse-proofreading" title="Permanent link">&para;</a></h3>
+<p><strong>Option A - Purely automatic synapse detectors (no proofreading)</strong></p>
+<ul>
+<li><em>Pros</em>: easiest; no additional human effort.  </li>
+<li><em>Cons</em>: false positives and false negatives directly distort the connectivity graph.</li>
+</ul>
+<p><strong>Option B - Spreadsheet / text-based curation</strong></p>
+<ul>
+<li><em>Pros</em>: minimal tooling.  </li>
+<li><em>Cons</em>: disconnected from the EM context; hard to reason about subtle ultrastructural features.</li>
+</ul>
+<p><strong>Decision</strong>: use <strong>CATMAID</strong> as the synapse proofreading environment.</p>
+<p>Workflow:</p>
+<ol>
+<li>Synapse predictions from <strong>Synful</strong> or <strong>SimpSyn</strong> are exported and pushed into CATMAID as candidate synapse sites.</li>
+<li>Proofreaders inspect each candidate in the EM volume using CATMAID's native tools.</li>
+<li>Each candidate is tagged as <code>correct synapse</code>, <code>incorrect synapse</code>, or <code>uncertain</code>.</li>
+</ol>
+<p>This gives us:</p>
+<ul>
+<li>cleaned synapse lists for connectivity analysis,</li>
+<li>curated validation sets,</li>
+<li>and a consistent way to feed corrections back into model training and evaluation (see also the <a href="https://www.biorxiv.org/content/10.1101/2025.09.26.678851v1">preprint</a> on standardising crowdsourced synapse annotations).</li>
 </ul>
 <h2 id="decision">Decision<a class="headerlink" href="#decision" title="Permanent link">&para;</a></h2>
-<p>What we chose and why.</p>
+<p>We decided to support <strong>three complementary proofreading axes</strong> in Catena:</p>
+<ol>
+<li><strong>Local sub-cubes (Seg2Link)</strong>  </li>
+<li>Focus: high-quality corrections in small regions.  </li>
+<li>
+<p>Use case: generating ground-truth for retraining and detailed evaluation.</p>
+</li>
+<li>
+<p><strong>Whole-brain segmentations (CAVE)</strong>  </p>
+</li>
+<li>Focus: neuron trajectories and large-scale merge/split errors.  </li>
+<li>
+<p>Use case: making full-brain segmentations usable for circuit reconstruction.</p>
+</li>
+<li>
+<p><strong>Object-level proofreading</strong>  </p>
+</li>
+<li><strong>Skeleton-guided automatic merging</strong> (CATMAID) for fragmented neuron segments.  </li>
+<li><strong>Synapse proofreading</strong> (CATMAID) for refining connectivity.</li>
+</ol>
+<p>This combination lets us:</p>
+<ul>
+<li>avoid reinventing complex UI tools,</li>
+<li>keep proofreading close to where domain experts already work,</li>
+<li>and turn corrections into reusable assets for Catena's models.</li>
+</ul>
 <h2 id="trade-offs">Trade-offs<a class="headerlink" href="#trade-offs" title="Permanent link">&para;</a></h2>
-<p>Compute, memory, DX, accuracy, portability, etc.</p>
+<ul>
+<li><strong>Tooling diversity vs simplicity</strong>  </li>
+<li>Using Seg2Link, CAVE, and CATMAID means users may have to interact with multiple systems.</li>
+<li>
+<p>The upside is that we align with <strong>well-supported, field-standard tools</strong> instead of building fragile custom UIs.</p>
+</li>
+<li>
+<p><strong>Local vs global context</strong>  </p>
+</li>
+<li>Seg2Link excels at small, detailed sub-cubes but is not designed for whole-brain version control.</li>
+<li>
+<p>CAVE provides global, graph-level context and history, but is more heavyweight to set up and integrate with.</p>
+</li>
+<li>
+<p><strong>Automation vs reliability</strong>  </p>
+</li>
+<li>Skeleton-guided merging is attractive but currently constrained by skeleton availability and completeness.</li>
+<li>
+<p>Synapse proofreading relies on human judgement; it is slower but significantly more reliable than blind acceptance of model outputs.</p>
+</li>
+<li>
+<p><strong>Format conversions</strong>  </p>
+</li>
+<li>Catena's internal processing often uses Zarr, while some tools (e.g. Seg2Link) expect TIFF.</li>
+<li>We accept this conversion step as a practical compromise to benefit from those tools.</li>
+</ul>
 <h2 id="implementation-notes">Implementation Notes<a class="headerlink" href="#implementation-notes" title="Permanent link">&para;</a></h2>
-<p>Key parameters, scripts, data flow.</p>
+<p>High-level structure:</p>
+<ul>
+<li><strong>Seg2Link workflow</strong></li>
+<li>Convert Zarr segmentations to TIFF sub-cubes.</li>
+<li>Load EM + segmentation into Seg2Link (napari-based).</li>
+<li>Correct split/merge errors and paint missing regions.</li>
+<li>
+<p>Export corrected labels for use as ground-truth.</p>
+</li>
+<li>
+<p><strong>CAVE workflow</strong></p>
+</li>
+<li>Ingest whole-brain segmentations into CAVE. This is done in collaboration with Heinze lab in Lund University, Sweden.</li>
+<li>Proofread merges/splits on neuron instances over time.</li>
+<li>Export corrected segmentation and metadata.</li>
+<li>
+<p>Use exported labels for retraining / fine-tuning Catena models.</p>
+</li>
+<li>
+<p><strong>CATMAID skeleton merging</strong></p>
+</li>
+<li>Load CATMAID skeletons and corresponding segmentation.</li>
+<li>Optionally resample skeletons / fit B-splines.</li>
+<li>Detect segments intersected by the same skeleton and merge them.</li>
+<li>
+<p>Experimental Script: <code>proofreading/auto_merge_seg_w_tracings.py</code>.</p>
+</li>
+<li>
+<p><strong>Synapse proofreading in CATMAID</strong></p>
+</li>
+<li>Push Synful / SimpSyn synapse predictions into CATMAID.</li>
+<li>Tag synapses as correct/incorrect/uncertain.</li>
+<li>Export curated synapse tables for analysis and model improvement.</li>
+</ul>
 <h2 id="operational-guidance">Operational Guidance<a class="headerlink" href="#operational-guidance" title="Permanent link">&para;</a></h2>
-<p>Tuning tips, failure modes, troubleshooting.</p>
+<p><strong>When to use which workflow?</strong></p>
+<ul>
+<li>Use <strong>Seg2Link</strong> when:</li>
+<li>you want to create high-quality labels in small regions,</li>
+<li>you are preparing data for <strong>retraining / fine-tuning</strong> a model,</li>
+<li>
+<p>or you need detailed local inspection of split/merge behaviour.</p>
+</li>
+<li>
+<p>Use <strong>CAVE</strong> when:</p>
+</li>
+<li>you have a large or whole-brain segmentation,</li>
+<li>you care about global neuron trajectories,</li>
+<li>
+<p>you want a clean history of merges and splits for many proofreaders.</p>
+</li>
+<li>
+<p>Use <strong>CATMAID skeleton merging</strong> when:</p>
+</li>
+<li>you have reliable, (near-)complete skeletons,</li>
+<li>
+<p>and you suspect substantial fragmentation in the segmentation that follows those traced neurons.</p>
+</li>
+<li>
+<p>Use <strong>CATMAID synapse proofreading</strong> when:</p>
+</li>
+<li>you already have Synful/SimpSyn predictions,</li>
+<li>and you are building a cleaned, annotated synapse set to support connectivity analysis and model evaluation.</li>
+</ul>
+<p><strong>Practical tips</strong></p>
+<ul>
+<li>Always keep track of which corrections are intended as <strong>training data</strong> vs <strong>evaluation data</strong>; avoid mixing them.  </li>
+<li>For large-scale workflows (CAVE, CATMAID), rely on their built-in versioning/tagging instead of maintaining ad-hoc spreadsheets.  </li>
+<li>For Seg2Link, keep a simple manifest of which sub-cubes were proofread, by whom, and for which purpose.</li>
+</ul>
 <h2 id="future-work-open-questions">Future Work / Open Questions<a class="headerlink" href="#future-work-open-questions" title="Permanent link">&para;</a></h2>
-<p>What we plan to revisit and why.</p>
+<ul>
+<li><strong>More automated prioritisation</strong>  </li>
+<li>
+<p>Use model uncertainty or disagreement (between methods or runs) to prioritise which regions or objects to proofread first.</p>
+</li>
+<li>
+<p><strong>Deeper integration between tools</strong>  </p>
+</li>
+<li>
+<p>Tighter scripts for round-tripping data between Catena &lt;-&gt; CAVE &lt;-&gt; CATMAID &lt;-&gt; Seg2Link without manual bookkeeping.</p>
+</li>
+<li>
+<p><strong>Scaling skeleton-based proofreading</strong>  </p>
+</li>
+<li>
+<p>As more high-quality skeletons become available, expand skeleton-guided merging beyond a prototype into a more standard part of the pipeline.</p>
+</li>
+<li>
+<p><strong>Standardising synapse proofreading protocols</strong>  </p>
+</li>
+<li>Building our standardising synapse annotation preprint and CATMAID workflows to define clearer guidelines for crowdsourced and expert synapse proofreading in EM connectomics.</li>
+</ul>
+<p>The overall philosophy is to treat proofreading as an integral part of Catena, not an afterthought, and to keep evolving these workflows as more data, tools, and community practices emerge.</p>
 
 
 
